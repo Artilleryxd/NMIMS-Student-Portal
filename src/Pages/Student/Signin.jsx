@@ -3,19 +3,36 @@ import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../Context/AuthContext'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useLayoutEffect , useRef } from 'react';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 const Signin = () => {
-    const {signIn} = UserAuth();
+    const {signIn , user} = UserAuth();
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
     const [error , setError] = useState('')
     const navigate = useNavigate()
+
+
+    const boxRef = useRef(null);
+    const db  = getFirestore();
+
+    const linkUidToFirestore = async (uid) => {
+        const userRef = doc(db, 'Users', uid);
+        await setDoc(userRef, { uid, email, }, { merge: true });
+      };
+
+
     const handelsubmit = async (e) => {
         e.preventDefault()
         setError('')
         try {
             await signIn(email, password);
+            if (user) {
+                await linkUidToFirestore(user.uid);
+                navigate('/account');
+              } 
             toast.success("Logged in Sucessfully");
-            navigate('/account');
+
         }
         catch (error) {
             setError(error.message);
@@ -31,7 +48,7 @@ const Signin = () => {
           <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
           Portal    
       </a>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700" ref={boxRef}>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
