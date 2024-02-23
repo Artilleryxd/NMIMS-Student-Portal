@@ -5,6 +5,20 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLayoutEffect, useRef } from "react";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
+
+import {Input } from '../../Components/ui/input'
+import {Label } from '../../Components/ui/label'
+import{  Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle} from '../../Components/ui/card'
+
+import { Button } from '../../Components/ui/button'
+import Nav from '../../Components/Nav';
+
+
 const Signin = () => {
   const { signIn, user } = UserAuth();
   const [email, setEmail] = useState("");
@@ -20,16 +34,16 @@ const Signin = () => {
     await setDoc(userRef, { uid, email }, { merge: true });
   };
 
-  const handelsubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signIn(email, password);
       if (user) {
         await linkUidToFirestore(user.uid);
-        navigate("/account");
       }
       toast.success("Logged in Sucessfully");
+      navigate("/account");
     } catch (error) {
       setError(error.message);
       toast.error(error.message);
@@ -37,87 +51,58 @@ const Signin = () => {
   };
 
   return (
-    <div>
-      <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-          >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
-            Portal
-          </a>
-          <div
-            className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
-            ref={boxRef}
-          >
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Sign in to your account
-              </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handelsubmit}>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
-                  </label>
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@nmims.in"
-                    required=""
-                  />
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
-                  </label>
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start"></div>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Sign in
-                </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet?{" "}
-                  <a
-                    href="/signup"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Sign up
-                  </a>
-                </p>
-              </form>
+    < >
+    <div className="z-20">
+    <Nav />
+    </div>
+    
+
+    <div className='h-lvh flex items-center justify-center'>
+
+       <Card className="w-[350px] z-20">
+      <CardHeader>
+        <CardTitle>Sign In</CardTitle>
+        <CardDescription>Welcome to NMIMS University </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit}>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="email" >Email Adress</Label>
+              <Input id="email" placeholder="user@nmims.in" onChange={(e) =>setEmail(e.target.value)} />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="Password">Password</Label>
+              <Input type="password" id="password"  placeholder="••••••••"  onChange={(e) =>setPassword(e.target.value)}/>
+
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+          <div className="flex justify-between space-x-4 ">
+            {/* //TODO : Add Forgot Password Functionality */}
+          <Button variant="ghost" class=" text-xs ml-2 " onSubmit={()=>{}}>Forgot Password ? </Button>
+
+          <Button className="mt-4">Login</Button>
+          </div>
+          
+          <p className='text-xs justify-center mt-8'>Don't Have an account yet? <span className=' text-blue-600'><a href="/signup">Sign Up </a></span></p>
+        </form>
+      </CardContent>
+      
+    </Card>
+   <video
+    autoPlay
+    loop
+    muted
+    class="absolute z-10 w-auto min-w-full min-h-full max-w-none"
+  >
+    <source
+      src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-heights-in-a-sunset-26070-large.mp4"
+      type="video/mp4"
+    />
+    Your browser does not support the video tag.
+  </video>
+      </div>
+      </>
   );
 };
 

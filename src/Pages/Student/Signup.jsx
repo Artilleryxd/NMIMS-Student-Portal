@@ -69,7 +69,7 @@ const Signup = () => {
 
        <Card className="w-[350px] z-20">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle>Sign Up</CardTitle>
         <CardDescription>Welcome to NMIMS University </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,10 +82,17 @@ const Signup = () => {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="Password">Password</Label>
               <Input type="password" id="password"  placeholder="••••••••"  onChange={(e) =>setPassword(e.target.value)}/>
+
             </div>
           </div>
-          <Button className=" my-4">Login</Button>
+          <div className="flex justify-between space-x-4 ">
+            {/* //TODO : Add Forgot Password Functionality */}
+          <Button variant="ghost" class=" text-xs ml-2 " onSubmit={()=>{}}>Forgot Password ? </Button>
 
+          <Button className="mt-4">Login</Button>
+          </div>
+          
+          <p className='text-xs justify-center mt-8'>Have an account yet? <span className=' text-blue-600'><a href="/">Sign In</a></span></p>
         </form>
       </CardContent>
       

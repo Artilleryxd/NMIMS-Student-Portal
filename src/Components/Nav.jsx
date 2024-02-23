@@ -6,7 +6,9 @@ const Nav = () => {
     <>
       <div class="flex justify-between items-center space-x-4 m-4">
         <div class="flex-shrink-0 border rounded-sm p-2">
+          <a href="/">
           <School />
+          </a>
         </div>
         <ModeToggle />
       </div>
