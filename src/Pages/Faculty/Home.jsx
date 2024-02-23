@@ -1,9 +1,10 @@
 import React from "react";
+import Nav from "../../Components/Nav.jsx";
 
 const Home = () => {
   return (
     <div>
-      <h1>lol</h1>
+     <Nav/>
     </div>
   );
 };

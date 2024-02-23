@@ -1,9 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../Context/AuthContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useLayoutEffect, useRef } from "react";
+import {  useRef } from "react";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 
 import {Input } from '../../Components/ui/input'
@@ -11,14 +11,11 @@ import {Label } from '../../Components/ui/label'
 import{  Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle} from '../../Components/ui/card'
-
 import { Button } from '../../Components/ui/button'
-import Nav from '../../Components/Nav';
-
-
+import { ModeToggle } from "../../Components/ui/mode-toggle";
+import { School} from "lucide-react";
 const Signin = () => {
   const { signIn, user } = UserAuth();
   const [email, setEmail] = useState("");
@@ -43,7 +40,9 @@ const Signin = () => {
         await linkUidToFirestore(user.uid);
       }
       toast.success("Logged in Sucessfully");
-      navigate("/account");
+      // TODO: Redirect faculty to faculty page and student to student page
+      navigate("/account");  
+    
     } catch (error) {
       setError(error.message);
       toast.error(error.message);
@@ -53,8 +52,15 @@ const Signin = () => {
   return (
     < >
     <div className="z-20">
-    <Nav />
-    </div>
+    <div class="flex justify-between items-center space-x-4 m-4">
+        <div class="flex-shrink-0 border rounded-sm p-2">
+          <a href="/">
+          <School />
+          </a>
+        </div>
+        <ModeToggle />
+      </div>   
+       </div>
     
 
     <div className='h-lvh flex items-center justify-center'>

@@ -2,28 +2,19 @@ import React from 'react'
 import { useState } from 'react'
 import { UserAuth } from '../../Context/AuthContext'
 import toast from 'react-hot-toast'
-import { Link , useNavigate } from 'react-router-dom';
+import {   useNavigate } from 'react-router-dom';
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import {Input } from '../../Components/ui/input'
 import {Label } from '../../Components/ui/label'
 import  {  Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle} from '../../Components/ui/card'
-    import {
-        Select,
-        SelectContent,
-        SelectItem,
-        SelectTrigger,
-        SelectValue,
-      } from '../../Components/ui/select'
-      import { Button } from '../../Components/ui/button'
-        import { ModeToggle } from '../../Components/ui/mode-toggle'
-import Nav from '../../Components/Nav';
-import bgvideo from '../../../public/videos/background.mp4'
 
+import { Button } from '../../Components/ui/button'
+import { ModeToggle } from '../../Components/ui/mode-toggle'
+import { School} from "lucide-react";
 const Signup = () => {
     const { SignIn } = UserAuth();
     const [email , setEmail] = useState('')
@@ -60,9 +51,16 @@ const Signup = () => {
 
   return (
     < >
-    <div className="z-20">
-    <Nav />
-    </div>
+<div className="z-20">
+    <div class="flex justify-between items-center space-x-4 m-4">
+        <div class="flex-shrink-0 border rounded-sm p-2">
+          <a href="/">
+          <School />
+          </a>
+        </div>
+        <ModeToggle />
+      </div>   
+       </div>
     
 
     <div className='h-lvh flex items-center justify-center'>
