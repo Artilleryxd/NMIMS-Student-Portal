@@ -23,7 +23,7 @@ const Nav = () => {
         <div className="max-w-screen-xl mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+              <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                 <span className="text-2xl font-semibold whitespace-nowrap text-rose-700 dark:text-rose-700 border-b-white">Portal</span>
               </a>
             </div>
