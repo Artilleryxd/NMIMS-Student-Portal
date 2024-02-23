@@ -8,6 +8,8 @@ import Assignments from "./Pages/Student/Assigments"
 import { AuthContextProvider } from "./Context/AuthContext"
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './Components/ProtectedRoute'
+import Home from "./Pages/Faculty/Home"
+import ProtectedRoutesByType from "./Components/ProtectedRoutesByType"
 function App() {
 
   return (
@@ -19,6 +21,7 @@ function App() {
     <Route path="/" element={<Signin />} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+    <Route path="/fac/home" element={<ProtectedRoutesByType><Home /></ProtectedRoutesByType>} />
     <Route path="/assignments" element={<ProtectedRoute><Assignments /></ProtectedRoute>} />
 
 

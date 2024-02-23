@@ -2,22 +2,35 @@ import React from 'react'
 import { useState } from 'react'
 import { UserAuth } from '../../Context/AuthContext'
 import toast from 'react-hot-toast'
-import { Link , useNavigate } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
+
 const Signup = () => {
+    const { SignIn } = UserAuth();
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
     const [error , setError] = useState('')
     const navigate = useNavigate()
     const { createUser } = UserAuth();
 
+// onChange={(e) =>setEmail(e.target.value)} use this in input functions 
+    const db  = getFirestore();
+    const linkUidToFirestore = async (uid, email) => {
+        const userRef = doc(db, 'Users', uid);
+        await setDoc(userRef, { uid, email, type:'student' }, { merge: true });
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError('')
         try {
-            await createUser(email, password);
+           const response =  await createUser(email, password);
+            if (response.user){
+                await linkUidToFirestore(response.user.uid, email);      
+                navigate('/account');
+
+            }
             toast.success("Account Created Sucesfully");
-            navigate('/account');
 
         }
         catch (error) {
@@ -27,8 +40,8 @@ const Signup = () => {
     }
 
   return (
-    <div>
-      <section className="bg-gray-50 dark:bg-gray-900">
+    <div >
+      <section className="bg-gray-50 dark:bg-gray-900 max-h-screen	">
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
