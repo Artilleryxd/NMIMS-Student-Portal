@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { getDoc, doc, getFirestore } from 'firebase/firestore';
-import { UserAuth } from '../Context/AuthContext';
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { getDoc, doc, getFirestore } from "firebase/firestore";
+import { UserAuth } from "../Context/AuthContext";
 
 const ProtectedRoutesByType = ({ children }) => {
   const { user, loading } = UserAuth();
@@ -11,17 +11,17 @@ const ProtectedRoutesByType = ({ children }) => {
     const fetchUserType = async () => {
       if (user) {
         try {
-          const userDocRef = doc(db, 'Users', user.uid);
+          const userDocRef = doc(db, "Users", user.uid);
           const userDocSnapshot = await getDoc(userDocRef);
           if (userDocSnapshot.exists()) {
             const userData = userDocSnapshot.data();
             const userType = userData.type;
-            if (userType !== 'fac') {
-              window.location.href = '/account';
+            if (userType !== "fac") {
+              window.location.href = "/account";
             }
           }
         } catch (error) {
-          console.error('Error fetching user type:', error);
+          console.error("Error fetching user type:", error);
         }
       }
     };
