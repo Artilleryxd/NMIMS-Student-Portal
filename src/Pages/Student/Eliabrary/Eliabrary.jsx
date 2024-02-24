@@ -1,9 +1,11 @@
 import React from "react";
+import Nav from "../../../Components/Nav";
 
 const Eliabrary = () => {
   return (
     <div>
-      <h1> liabrary here !</h1>
+      <Nav />
+      <h1>LIABRARY</h1>
     </div>
   );
 };

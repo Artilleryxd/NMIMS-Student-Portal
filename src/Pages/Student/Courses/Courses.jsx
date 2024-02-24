@@ -1,9 +1,11 @@
 import React from "react";
+import Nav from "../../../Components/Nav";
 
 const Courses = () => {
   return (
     <div>
-      <h1> Courses Here !</h1>
+      <Nav />
+      <h1>COURSES</h1>
     </div>
   );
 };
