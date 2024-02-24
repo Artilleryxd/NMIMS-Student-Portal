@@ -39,7 +39,7 @@ const Nav = () => {
               <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0">
                 <li>
                   <a
-                    href="#"
+                    href="/account"
                     className="text-white py-2 px-3 border-b-2 border-transparent "
                     aria-current="page"
                   >
