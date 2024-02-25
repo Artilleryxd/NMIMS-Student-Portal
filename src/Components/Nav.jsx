@@ -64,7 +64,7 @@ const Nav = () => {
                 </li>
                 <li>
                   <a
-                    href="/Eliabrary"
+                    href="/Elibrary"
                     className="text-white py-2 px-3 border-b-2 border-transparent "
                   >
                     E Library
