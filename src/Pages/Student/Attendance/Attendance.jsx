@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useTheme } from "../../../Components/theme-provider";
 
 const Attendance = () => {
-  const { theme } = useTheme(); // Get the current theme
+  const { theme } = useTheme();
 
   // Attendance data for demonstration
   const initialAttendanceData = [
