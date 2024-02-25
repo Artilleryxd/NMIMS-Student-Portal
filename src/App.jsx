@@ -10,6 +10,9 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Home from "./Pages/Faculty/Home";
 import ProtectedRoutesByType from "./Components/ProtectedRoutesByType";
 import { ThemeProvider } from "../src/Components/theme-provider";
+import Attendance from "./Pages/Student/Attendance/Attendance";
+import Courses from "./Pages/Student/Courses/Courses";
+import Eliabrary from "./Pages/Student/Eliabrary/Eliabrary";
 function App() {
   return (
     <>
@@ -35,6 +38,11 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
+            <Route path="/attendance" element={<Attendance />} />
+
+            <Route path="/courses" element={<Courses />} />
+
+            <Route path="/eliabrary" element={<Eliabrary />} />
           </Routes>
         </AuthContextProvider>
       </ThemeProvider>
