@@ -13,6 +13,12 @@ import { ThemeProvider } from "../src/Components/theme-provider";
 import Attendance from "./Pages/Student/Attendance/Attendance";
 import Courses from "./Pages/Student/Courses/Courses";
 import Eliabrary from "./Pages/Student/Eliabrary/Eliabrary";
+
+// fac logins importing
+import Facelib from "./Pages/Faculty/Facelib";
+import Facattendance from "./Pages/Faculty/FacAttendance";
+import Faccontact from "./Pages/Faculty/FacContact";
+import Facassign from "./Pages/Faculty/FacAssign";
 function App() {
   return (
     <>
@@ -30,6 +36,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
+           
+            <Route path="/attendance" element={<Attendance />} />
+
+            <Route path="/courses" element={<Courses />} />
+
+            <Route path="/eliabrary" element={<Eliabrary />} />
+
+
+
+            {/* faculty routes */}
             <Route
               path="/fac/home"
               element={
@@ -38,12 +54,40 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
-            <Route path="/attendance" element={<Attendance />} />
-
-            <Route path="/courses" element={<Courses />} />
-
-            <Route path="/eliabrary" element={<Eliabrary />} />
+             <Route
+              path="/fac/e-library"
+              element={
+                <ProtectedRoutesByType>
+                  <Facelib />
+                </ProtectedRoutesByType>
+              }
+            />
+            <Route
+              path="/fac/attendance"
+              element={
+                <ProtectedRoutesByType>
+                  <Facattendance />
+                </ProtectedRoutesByType>
+              }
+            />
+              <Route
+              path="/fac/assignments"
+              element={
+                <ProtectedRoutesByType>
+                  <Facassign />
+                </ProtectedRoutesByType>
+              }
+            />
+             <Route
+              path="/fac/contact-us"
+              element={
+                <ProtectedRoutesByType>
+                  <Faccontact />
+                </ProtectedRoutesByType>
+              }
+            />
           </Routes>
+          
         </AuthContextProvider>
       </ThemeProvider>
     </>

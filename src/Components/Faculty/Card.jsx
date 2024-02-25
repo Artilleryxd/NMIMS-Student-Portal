@@ -25,30 +25,29 @@ const CardGrid = () => {
       description:
         'The E Library is a digital library that provides access to a wide range of resources.',
         link:
-        '/account',
+        '/fac/e-library',
     },
     {
         title: 'Attendance QR',
         description:
           'You can take attendance by scanning the QR code of the students.',
           link:
-          '/account',
+          '/fac/attendance',
       },
       {
         title: 'Assignments',
         description:
           'You can create and manage assignments for the students.',
           link:
-          '/account',
+          '/fac/assignments',
       },
       {
         title: 'Contact Us',
         description:
           'You can contact us for any queries or issues.',
           link:
-            '/account',
+            '/fac/contact-us',
       },
-    // Add more card data as needed
   ];
 
   return (
