@@ -34,16 +34,24 @@ const Attendance = () => {
     <>
       <Nav />
       <div
-        className={`container mx-auto px-4 py-8 ${theme === "dark" ? "dark:text-white dark:bg-gray-900" : ""}`}
+        className={`container mx-auto px-4 py-8 rounded ${theme === "dark" ? "dark:text-white dark:bg-gray-900" : ""}`}
       >
         <h1 className="text-3xl font-bold mb-8 text-center">Your Attendance</h1>
         <div className="mb-8 flex justify-center">
           <DatePicker
-            className="text-black border border-gray-300 rounded px-4 py-2"
+            className="text-black border border-gray-300 rounded mx-2 px-4 py-2"
             selected={selectedDate}
             onChange={handleDateChange}
             dateFormat="yyyy-MM-dd"
-            placeholderText="Select Date"
+            placeholderText="Start Date"
+          />
+          
+          <DatePicker
+            className="text-black border border-gray-300 rounded mx-2 px-4 py-2"
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="End Date"
           />
         </div>
         <table className="w-full mx-auto">
