@@ -1,13 +1,13 @@
 import React from "react";
 import Nav from "../../../Components/Nav";
 
-const Eliabrary = () => {
+const Elibrary = () => {
   return (
     <div>
       <Nav />
-      <h1>LIABRARY</h1>
+      <h1>welcome to LIBRARY</h1>
     </div>
   );
 };
 
-export default Eliabrary;
+export default Elibrary;

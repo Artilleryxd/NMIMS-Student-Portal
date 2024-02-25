@@ -12,7 +12,7 @@ import ProtectedRoutesByType from "./Components/ProtectedRoutesByType";
 import { ThemeProvider } from "../src/Components/theme-provider";
 import Attendance from "./Pages/Student/Attendance/Attendance";
 import Courses from "./Pages/Student/Courses/Courses";
-import Eliabrary from "./Pages/Student/Eliabrary/Eliabrary";
+import Elibrary from "./Pages/Student/Elibrary/Elibrary";
 function App() {
   return (
     <>
@@ -42,7 +42,7 @@ function App() {
 
             <Route path="/courses" element={<Courses />} />
 
-            <Route path="/eliabrary" element={<Eliabrary />} />
+            <Route path="/elibrary" element={<Elibrary />} />
           </Routes>
         </AuthContextProvider>
       </ThemeProvider>

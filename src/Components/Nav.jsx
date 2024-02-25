@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { UserAuth } from "../Context/AuthContext";
+import { useTheme } from "../Components/theme-provider";
+
 const Nav = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const { theme } = useTheme(); // Get the current theme
 
   const toggleUserDropdown = () => {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
-  const { user } = UserAuth();
+
+  const { user, logout } = UserAuth();
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -27,7 +32,9 @@ const Nav = () => {
                 href="/"
                 className="flex items-center space-x-3 rtl:space-x-reverse"
               >
-                <span className="text-2xl font-semibold whitespace-nowrap text-rose-700 dark:text-rose-700 border-b-white">
+                <span
+                  className={`text-2xl font-semibold whitespace-nowrap ${theme === "dark" ? "text-rose-700 dark:text-rose-700" : "text-gray-700"}`}
+                >
                   NMIMS Portal
                 </span>
               </a>
@@ -40,7 +47,7 @@ const Nav = () => {
                 <li>
                   <a
                     href="/account"
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    className={`py-2 px-3 border-b-2 border-transparent ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                     aria-current="page"
                   >
                     Home
@@ -49,7 +56,7 @@ const Nav = () => {
                 <li>
                   <a
                     href="/attendance"
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    className={`py-2 px-3 border-b-2 border-transparent ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                   >
                     Attendance
                   </a>
@@ -57,15 +64,15 @@ const Nav = () => {
                 <li>
                   <a
                     href="/courses"
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    className={`py-2 px-3 border-b-2 border-transparent ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                   >
                     Courses
                   </a>
                 </li>
                 <li>
                   <a
-                    href="/Eliabrary"
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    href="/Elibrary"
+                    className={`py-2 px-3 border-b-2 border-transparent ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                   >
                     E Library
                   </a>
@@ -73,7 +80,7 @@ const Nav = () => {
                 <li>
                   <a
                     onClick={handleLogout}
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    className={`py-2 px-3 border-b-2 border-transparent cursor-pointer ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                   >
                     Logout
                   </a>
@@ -107,7 +114,7 @@ const Nav = () => {
         </div>
       </nav>
       <div
-        className={`z-50 ${isUserDropdownOpen ? "block" : "hidden"} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-rose-700 dark:divide-rose-600`}
+        className={`z-50 ${isUserDropdownOpen ? "block" : "hidden"} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow ${theme === "dark" ? "dark:bg-rose-700 dark:divide-rose-600" : ""}`}
         id="user-dropdown"
       >
         <div className="px-4 py-3">
@@ -122,7 +129,7 @@ const Nav = () => {
           </li>
           <li>
             <a href="#" className="block px-4 py-2 text-sm">
-              Attendace
+              Attendance
             </a>
           </li>
           <li>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { useEffect } from 'react';
 import { UserAuth } from '../../Context/AuthContext'
 import toast from 'react-hot-toast'
 import {   useNavigate } from 'react-router-dom';
@@ -17,6 +18,10 @@ import { ModeToggle } from '../../Components/ui/mode-toggle'
 import { School} from "lucide-react";
 const Signup = () => {
     const { SignIn } = UserAuth();
+    const[placeholder, setPlaceholder] = useState({
+      email : "",
+      password : ""
+    });
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
     const [error , setError] = useState('')
@@ -49,6 +54,13 @@ const Signup = () => {
         }
     }
 
+    useEffect(() => {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }, []);
+
   return (
     < >
 <div className="z-20">
@@ -75,11 +87,11 @@ const Signup = () => {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email" >Email Adress</Label>
-              <Input id="email" placeholder="user@nmims.in" onChange={(e) =>setEmail(e.target.value)} />
+              <Input id="email" placeholder={placeholder.email} onBlur={() => setPlaceholder({email : "" , password  : ""})} onClick={() => setPlaceholder({email : "user@nmims.in" , password: ""})} onChange={(e) =>setEmail(e.target.value)} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="Password">Password</Label>
-              <Input type="password" id="password"  placeholder="••••••••"  onChange={(e) =>setPassword(e.target.value)}/>
+              <Input type="password" id="password"  placeholder={placeholder.password} onBlur={() => setPlaceholder({email : "" , password  : ""})} onClick={() => setPlaceholder({password:"••••••••"})} onChange={(e) =>setPassword(e.target.value)}/>
 
             </div>
           </div>
@@ -87,10 +99,10 @@ const Signup = () => {
             {/* //TODO : Add Forgot Password Functionality */}
           <Button variant="ghost" class=" text-xs ml-2 " onSubmit={()=>{}}>Forgot Password ? </Button>
 
-          <Button className="mt-4">Login</Button>
+          <Button className="mt-4">Sign Up</Button>
           </div>
           
-          <p className='text-xs justify-center mt-8'>Have an account yet? <span className=' text-blue-600'><a href="/">Sign In</a></span></p>
+          <p className='text-xs justify-center mt-8'>Already have an account?<span className=' text-blue-600'><a href="/"> Sign In</a></span></p>
         </form>
       </CardContent>
       
