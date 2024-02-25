@@ -99,7 +99,7 @@ const Signup = () => {
             {/* //TODO : Add Forgot Password Functionality */}
           <Button variant="ghost" class=" text-xs ml-2 " onSubmit={()=>{}}>Forgot Password ? </Button>
 
-          <Button className="mt-4">Login</Button>
+          <Button className="mt-4">Sign Up</Button>
           </div>
           
           <p className='text-xs justify-center mt-8'>Already have an account?<span className=' text-blue-600'><a href="/"> Sign In</a></span></p>

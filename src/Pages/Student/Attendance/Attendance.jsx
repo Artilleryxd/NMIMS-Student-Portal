@@ -41,7 +41,7 @@ const Attendance = () => {
             placeholderText="Select Date"
           />
         </div>
-        <table className="w-full">
+        <table className="w-full mx-auto">
           <thead className="bg-red-500 text-white">
             <tr>
               <th className="px-6 py-3 text-left font-semibold uppercase">

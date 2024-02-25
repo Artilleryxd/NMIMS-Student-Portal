@@ -6,7 +6,7 @@ const Nav = () => {
   const toggleUserDropdown = () => {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
-  const { user } = UserAuth();
+  const { user, logout } = UserAuth();
   const handleLogout = async () => {
     try {
       await logout();
@@ -73,7 +73,7 @@ const Nav = () => {
                 <li>
                   <a
                     onClick={handleLogout}
-                    className="text-white py-2 px-3 border-b-2 border-transparent "
+                    className="text-white py-2 px-3 border-b-2 border-transparent cursor-pointer"
                   >
                     Logout
                   </a>
@@ -122,7 +122,7 @@ const Nav = () => {
           </li>
           <li>
             <a href="#" className="block px-4 py-2 text-sm">
-              Attendace
+              Attendance
             </a>
           </li>
           <li>
