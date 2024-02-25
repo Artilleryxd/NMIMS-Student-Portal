@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UserAuth } from "../Context/AuthContext";
 import { useTheme } from "../Components/theme-provider";
+import { ModeToggle } from "../Components/ui/mode-toggle";
 
 const Nav = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -86,6 +87,9 @@ const Nav = () => {
                   </a>
                 </li>
               </ul>
+              <div className="justify-self-end">
+                <ModeToggle/>
+              </div>
             </div>
             <div className="md:hidden">
               <button
