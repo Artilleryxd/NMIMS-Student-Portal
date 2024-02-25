@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import Nav from "../../../Components/Nav";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useTheme } from "../../../Components/theme-provider";
 
 const Attendance = () => {
+  const { theme } = useTheme(); // Get the current theme
+
   // Attendance data for demonstration
   const initialAttendanceData = [
     { subject: "CVT", date: "2024-02-01", status: "Present" },
@@ -30,7 +33,9 @@ const Attendance = () => {
   return (
     <>
       <Nav />
-      <div className="container mx-auto px-4 py-8">
+      <div
+        className={`container mx-auto px-4 py-8 ${theme === "dark" ? "dark:text-white dark:bg-gray-900" : ""}`}
+      >
         <h1 className="text-3xl font-bold mb-8 text-center">Your Attendance</h1>
         <div className="mb-8 flex justify-center">
           <DatePicker
@@ -42,7 +47,9 @@ const Attendance = () => {
           />
         </div>
         <table className="w-full mx-auto">
-          <thead className="bg-red-500 text-white">
+          <thead
+            className={`${theme === "dark" ? "bg-gray-800" : "bg-red-500"} text-white`}
+          >
             <tr>
               <th className="px-6 py-3 text-left font-semibold uppercase">
                 Subject
@@ -55,9 +62,14 @@ const Attendance = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="dark:bg-gray-900 divide-y divide-gray-200 ">
+          <tbody
+            className={`${theme === "dark" ? "dark:bg-gray-800" : "bg-gray-100"} divide-y divide-gray-200 `}
+          >
             {attendanceData.map((item, index) => (
-              <tr key={index} className="text-white">
+              <tr
+                key={index}
+                className={`${theme === "dark" ? "dark:text-white" : "text-black"}`}
+              >
                 <td className="px-6 py-4">{item.subject}</td>
                 <td className="px-6 py-4">{item.date}</td>
                 <td className="px-6 py-4">
