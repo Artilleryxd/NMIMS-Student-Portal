@@ -51,7 +51,7 @@ const Signin = () => {
 
   return (
     < >
-    <div className="z-20">
+    <div className="z-20 overflow-hidden">
     <div class="flex justify-between items-center space-x-4 m-4">
         <div class="flex-shrink-0 border rounded-sm p-2">
           <a href="/">
@@ -74,7 +74,7 @@ const Signin = () => {
         <form onSubmit={handleSubmit}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="email" >Email Adress</Label>
+              <Label htmlFor="email" >Email Address</Label>
               <Input id="email" placeholder="user@nmims.in" onChange={(e) =>setEmail(e.target.value)} />
             </div>
             <div className="flex flex-col space-y-1.5">
