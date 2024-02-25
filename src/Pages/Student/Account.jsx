@@ -22,16 +22,6 @@ import {
   CardTitle,
 } from "@/Components/ui/card";
 
-import { cn } from "@/lib/utils";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/Components/ui/carousel";
-
 import { Button } from "@/Components/ui/button";
 
 const Account = () => {
@@ -62,32 +52,51 @@ const Account = () => {
     {
       name: "Submitted",
       assignments: 10,
-      amt: 2400,
     },
     {
       name: "Late Submitted",
       assignments: 1,
-      amt: 2210,
     },
     {
       name: "Pending",
       assignments: 5,
-      amt: 2290,
     },
     {
       name: "Past Due",
       assignments: 2,
-      amt: 2290,
+    },
+  ];
+
+  const attendance = [
+    {
+      subName: "DBMS",
+      attended: 12,
+      notAttended: 5,
+    },
+    {
+      subName: "OOPJ",
+      attended: 12,
+      notAttended: 2,
+    },
+    {
+      subName: "CVT",
+      attended: 20,
+      notAttended: 5,
+    },
+    {
+      subName: "COA",
+      attended: 20,
+      notAttended: 3,
     },
   ];
 
   return (
     <>
       <Nav></Nav>
-      <div className="px-12">
+      <div className="px-12 py-5">
         <p className="font-bold text-5xl mx-3 my-5">Welcome, {userName}</p>
-        <div className="grid grid-cols-3 gap-10">
-          <Card className="col-span-1">
+        <div className="grid grid-rows-2 grid-cols-3 gap-7">
+          <Card className="col-span-1 row-span-1">
             <CardHeader>
               <CardTitle>New Assignments</CardTitle>
             </CardHeader>
@@ -117,12 +126,12 @@ const Account = () => {
               </Button>
             </CardFooter>
           </Card>
-          <Card className="col-span-2">
+          <Card className="col-span-2 row-span-1">
             <CardHeader>
-              <CardTitle>Assignments</CardTitle>
+              <CardTitle>History</CardTitle>
             </CardHeader>
             <CardContent className="flex justify-center items-center">
-              <ResponsiveContainer width="90%" height={300}>
+              <ResponsiveContainer width="90%" height={230}>
                 <BarChart
                   data={data}
                   margin={{
@@ -132,14 +141,48 @@ const Account = () => {
                     bottom: 5,
                   }}
                 >
-                  {/* <CartesianGrid strokeDasharray="3 3" /> */}
                   <XAxis dataKey="name" />
-                  {/* <YAxis /> */}
                   <Tooltip />
-                  <Bar dataKey="assignments" fill="--accent" />
+                  <Bar dataKey="assignments" fill="hsl(var(--primary))" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
+          </Card>
+          <Card className="col-span-2 row-span-1">
+            <CardHeader>
+              <CardTitle>Attendance</CardTitle>
+            </CardHeader>
+            <ResponsiveContainer width="90%" height={230}>
+              <BarChart
+                data={attendance}
+                layout="vertical"
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <XAxis type="number" />
+                <YAxis type="category" dataKey="subName" />
+                <Tooltip />
+                <Bar
+                  dataKey="attended"
+                  stackId="a"
+                  fill="hsl(var(--primary))"
+                />
+                <Bar
+                  dataKey="notAttended"
+                  stackId="a"
+                  fill="hsl(var(--destructive))"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+          <Card className="row-span-1 col-span-1">
+            <CardHeader>
+              <CardTitle>Your QR</CardTitle>
+            </CardHeader>
           </Card>
         </div>
       </div>
