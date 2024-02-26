@@ -20,13 +20,18 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [course, setCourse] = useState("");
   const navigate = useNavigate();
   const boxRef = useRef(null);
   const db = getFirestore();
 
-  const linkUidToFirestore = async (uid) => {
-    const userRef = doc(db, "Users", uid);
-    await setDoc(userRef, { uid, email }, { merge: true });
+  const linkUidToFirestore = async (uid, email, course) => {
+    const val = doc(db, course, uid);
+    await setDoc(val, { uid, email, type:'student' }, { merge: true });
+    const attendanceCollection = collection(val, 'attendance');
+    await setDoc(doc(attendanceCollection, 'day1'), {
+      present: true,
+    });
   };
 
   const handleSubmit = async (e) => {

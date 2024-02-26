@@ -31,6 +31,18 @@ function App() {
                 </ProtectedRoute>
               }
             />
+           
+           <Route path="/attendance" element={<Attendance />} />
+
+            <Route path="/courses" element={<Courses />} />
+
+            <Route path="/elibrary" element={<Elibrary />} />
+
+            <Route path="/assignments" element={<Assignments />} />
+
+
+
+            {/* faculty routes */}
             <Route
               path="/fac/home"
               element={
@@ -39,14 +51,40 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
-            <Route path="/attendance" element={<Attendance />} />
-
-            <Route path="/courses" element={<Courses />} />
-
-            <Route path="/elibrary" element={<Elibrary />} />
-
-            <Route path="/assignments" element={<Assignments />} />
+             <Route
+              path="/fac/e-library"
+              element={
+                <ProtectedRoutesByType>
+                  <Facelib />
+                </ProtectedRoutesByType>
+              }
+            />
+            <Route
+              path="/fac/attendance"
+              element={
+                <ProtectedRoutesByType>
+                  <Facattendance />
+                </ProtectedRoutesByType>
+              }
+            />
+              <Route
+              path="/fac/assignments"
+              element={
+                <ProtectedRoutesByType>
+                  <Facassign />
+                </ProtectedRoutesByType>
+              }
+            />
+             <Route
+              path="/fac/contact-us"
+              element={
+                <ProtectedRoutesByType>
+                  <Faccontact />
+                </ProtectedRoutesByType>
+              }
+            />
           </Routes>
+          
         </AuthContextProvider>
       </ThemeProvider>
     </>

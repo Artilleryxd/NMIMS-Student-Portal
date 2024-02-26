@@ -44,7 +44,7 @@ const Nav = () => {
               className="hidden md:flex md:w-auto md:items-center md:space-x-8 rtl:space-x-reverse"
               id="navbar-user"
             >
-              <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0">
+              <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 light:text-">
                 <li>
                   <a
                     href="/account"
