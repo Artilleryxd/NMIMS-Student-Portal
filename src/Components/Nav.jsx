@@ -1,13 +1,4 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend
-} from "recharts";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "@/Context/AuthContext";
 import { Button } from "./ui/button";
@@ -20,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import ModeToggle from "./ui/mode-toggle";
 
 const Nav = () => {
   const { user, logout } = UserAuth();
@@ -37,22 +29,26 @@ const Nav = () => {
 
   const navAssignments = () => {
     navigate("/assignments");
-  }
+  };
 
   const navAccount = () => {
     navigate("/account");
-  }
+  };
 
   return (
     <>
-      <nav className="flex flex-row justify-between items-center h-16 px-12 border-b border-slate-900/10">
+      <nav className="flex flex-row justify-between items-center w-full h-16 px-12 border-b">
         <div className="flex flex-row">
-          <Button variant="link" onClick={navAccount}>Dashboard</Button>
-          <Button variant="link" onClick={navAssignments} >Assignments</Button>
+          <Button variant="link" onClick={navAccount}>
+            Dashboard
+          </Button>
+          <Button variant="link" onClick={navAssignments}>
+            Assignments
+          </Button>
           <Button variant="link">Attendance</Button>
         </div>
-
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-5">
+          <ModeToggle></ModeToggle>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>

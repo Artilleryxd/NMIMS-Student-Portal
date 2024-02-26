@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Nav from "@/Components/Nav";
+import Footer from "@/Components/Footer";
 import {
   Card,
   CardContent,
@@ -93,10 +94,10 @@ const Account = () => {
   return (
     <>
       <Nav></Nav>
-      <div className="px-12 py-5">
+      <div className="px-12 py-5 w-full">
         <p className="font-bold text-5xl mx-3 my-5">Welcome, {userName}</p>
-        <div className="grid grid-rows-2 grid-cols-3 gap-7">
-          <Card className="col-span-1 row-span-1">
+        <div className="grid grid-rows-4 md:grid-rows-2 grid-cols-none md:grid-cols-3 gap-5 md:gap-7">
+          <Card className="md:col-span-1 row-span-1">
             <CardHeader>
               <CardTitle>New Assignments</CardTitle>
             </CardHeader>
@@ -126,7 +127,7 @@ const Account = () => {
               </Button>
             </CardFooter>
           </Card>
-          <Card className="col-span-2 row-span-1">
+          <Card className="md:col-span-2 row-span-1">
             <CardHeader>
               <CardTitle>History</CardTitle>
             </CardHeader>
@@ -141,14 +142,20 @@ const Account = () => {
                     bottom: 5,
                   }}
                 >
-                  <XAxis dataKey="name" />
-                  <Tooltip />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: "hsl(var(--foreground))" }}
+                  />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: "hsl(var(--background))" }}
+                    itemStyle={{ color: "hsl(var(--foreground))" }}
+                  />
                   <Bar dataKey="assignments" fill="hsl(var(--primary))" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
-          <Card className="col-span-2 row-span-1">
+          <Card className="md:col-span-2 row-span-1">
             <CardHeader>
               <CardTitle>Attendance</CardTitle>
             </CardHeader>
@@ -163,9 +170,19 @@ const Account = () => {
                   bottom: 5,
                 }}
               >
-                <XAxis type="number" />
-                <YAxis type="category" dataKey="subName" />
-                <Tooltip />
+                <XAxis
+                  type="number"
+                  tick={{ fill: "hsl(var(--foreground))" }}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="subName"
+                  tick={{ fill: "hsl(var(--foreground))" }}
+                />
+                <Tooltip
+                  contentStyle={{ backgroundColor: "hsl(var(--background)) " }}
+                  itemStyle={{ color: "hsl(var(--foreground))" }}
+                />
                 <Bar
                   dataKey="attended"
                   stackId="a"
@@ -174,18 +191,19 @@ const Account = () => {
                 <Bar
                   dataKey="notAttended"
                   stackId="a"
-                  fill="hsl(var(--destructive))"
+                  fill="hsl(var(--muted))"
                 />
               </BarChart>
             </ResponsiveContainer>
           </Card>
-          <Card className="row-span-1 col-span-1">
+          <Card className="col-span-1">
             <CardHeader>
               <CardTitle>Your QR</CardTitle>
             </CardHeader>
           </Card>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };
