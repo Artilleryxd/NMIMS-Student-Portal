@@ -8,7 +8,7 @@ import { Input } from '../../Components/ui/input';
 import { Label } from '../../Components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../Components/ui/card';
 import { Button } from '../../Components/ui/button';
-import { ModeToggle } from "../../Components/ui/mode-toggle";
+import ModeToggle from "../../Components/ui/mode-toggle";
 import { School } from "lucide-react";
 
 const Signin = () => {

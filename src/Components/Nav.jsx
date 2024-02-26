@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { UserAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Components/theme-provider";
-import { ModeToggle } from "../Components/ui/mode-toggle";
+import ModeToggle from "./ui/mode-toggle";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
