@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { UserAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "@/Context/AuthContext";
+import { useTheme } from "../Components/theme-provider";
+import { ModeToggle } from "../Components/ui/mode-toggle";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -11,9 +13,16 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import ModeToggle from "./ui/mode-toggle";
 
 const Nav = () => {
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const { theme } = useTheme(); // Get the current theme
+
+  const toggleUserDropdown = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+  };
+
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
@@ -27,28 +36,46 @@ const Nav = () => {
     }
   };
 
-  const navAssignments = () => {
-    navigate("/assignments");
-  };
-
-  const navAccount = () => {
-    navigate("/account");
-  };
+  const navButtons = [
+    {
+      text: "Home",
+      link: "/account",
+    },
+    {
+      text: "Attendance",
+      link: "/attendance",
+    },
+    {
+      text: "Courses",
+      link: "/courses",
+    },
+    {
+      text: "Assignments",
+      link: "/assignments",
+    },
+    {
+      text: "E-Library",
+      link: "/elibrary",
+    },
+  ];
 
   return (
-    <>
-      <nav className="flex flex-row justify-between items-center w-full h-16 px-12 border-b">
-        <div className="flex flex-row">
-          <Button variant="link" onClick={navAccount}>
-            Dashboard
-          </Button>
-          <Button variant="link" onClick={navAssignments}>
-            Assignments
-          </Button>
-          <Button variant="link">Attendance</Button>
+    <nav className="flex flex-row justify-between items-center w-full h-16 px-12 border-b">
+      <div className="text-2xl whitespace-nowrap">NMIMS Portal</div>
+      <div className="flex flex-row">
+        <div className="hidden md:block">
+          {navButtons.map((element, index) => (
+            <Button
+              key={index}
+              variant="link"
+              onClick={() => navigate(element.link)}
+            >
+              {element.text}
+            </Button>
+          ))}
         </div>
-        <div className="flex flex-row gap-5">
-          <ModeToggle></ModeToggle>
+        <div className="flex flex-row gap-4">
+          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
@@ -63,9 +90,43 @@ const Nav = () => {
               <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <div className="block md:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    ></path>
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Welcome</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {navButtons.map((element, index) => (
+                  <DropdownMenuItem
+                    key={index}
+                    onClick={() => navigate(element.link)}
+                  >
+                    {element.text}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 
