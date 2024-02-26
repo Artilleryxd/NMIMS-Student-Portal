@@ -11,7 +11,7 @@ const ProtectedRoutesByType = ({ children }) => {
     const fetchUserType = async () => {
       if (user) {
         try {
-          const userDocRef = doc(db, "Users", user.uid);
+          const userDocRef = doc(db, 'Users', user.uid);
           const userDocSnapshot = await getDoc(userDocRef);
           if (userDocSnapshot.exists()) {
             const userData = userDocSnapshot.data();

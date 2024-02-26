@@ -14,6 +14,11 @@ import { ThemeProvider } from "../src/Components/theme-provider";
 import Attendance from "./Pages/Student/Attendance/Attendance";
 import Courses from "./Pages/Student/Courses/Courses";
 import Elibrary from "./Pages/Student/Elibrary/Elibrary";
+// faculty imports
+import Facelib from "./Pages/Faculty/Facelib";
+import Facassign from "./Pages/Faculty/FacAssign";
+import Facattendance from "./Pages/Faculty/FacAttendance";
+import Faccontact from "./Pages/Faculty/FacContact";
 function App() {
   return (
     <>
