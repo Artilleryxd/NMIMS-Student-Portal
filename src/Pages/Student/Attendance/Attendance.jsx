@@ -3,6 +3,7 @@ import Nav from "../../../Components/Nav";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTheme } from "../../../Components/theme-provider";
+import Footer from "../../../Components/Footer";
 
 const Attendance = () => {
   const { theme } = useTheme();
@@ -113,6 +114,7 @@ const Attendance = () => {
           ))}
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };

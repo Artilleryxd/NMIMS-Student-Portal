@@ -44,6 +44,8 @@ function App() {
             <Route path="/courses" element={<Courses />} />
 
             <Route path="/elibrary" element={<Elibrary />} />
+
+            <Route path="/assignments" element={<Assignments />} />
           </Routes>
         </AuthContextProvider>
       </ThemeProvider>

@@ -80,6 +80,14 @@ const Nav = () => {
                 </li>
                 <li>
                   <a
+                    href="/assignments"
+                    className={`py-2 px-3 border-b-2 border-transparent ${theme === "dark" ? "text-white" : "text-gray-700"}`}
+                  >
+                    Assignments
+                  </a>
+                </li>
+                <li>
+                  <a
                     onClick={handleLogout}
                     className={`py-2 px-3 border-b-2 border-transparent cursor-pointer ${theme === "dark" ? "text-white" : "text-gray-700"}`}
                   >
