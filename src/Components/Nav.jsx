@@ -24,7 +24,6 @@ const Nav = () => {
   };
 
   const { user, logout } = UserAuth();
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
