@@ -6,8 +6,10 @@ const Elibrary = () => {
   return (
     <div>
       <Nav />
+      <div className="px-12">
       <h1>welcome to LIBRARY</h1>
-      <footer></footer>
+      </div>
+      <Footer />
     </div>
   );
 };

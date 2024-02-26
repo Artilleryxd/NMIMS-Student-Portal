@@ -34,9 +34,7 @@ const Attendance = () => {
     <>
       <Nav />
       <div
-        className={`container mx-auto px-4 py-8 rounded ${
-          theme === "dark" ? "dark:text-white dark:bg-gray-900" : ""
-        }`}
+        className="container mx-auto px-12 py-8 rounded"
       >
         <h1 className="text-3xl font-bold mb-8 text-center">Your Attendance</h1>
         <div className="mb-8 flex flex-col md:flex-row justify-center items-center md:space-x-4">
@@ -60,23 +58,21 @@ const Attendance = () => {
           {attendanceData.map((item, index) => (
             <div
               key={index}
-              className={`${
-                theme === "dark" ? "dark:bg-gray-800" : "bg-white"
-              } rounded-lg overflow-hidden shadow-md`}
+              className = "bg-muted rounded-lg overflow-hidden shadow-md"
             >
               <div className="p-6">
                 <h2 className="text-lg font-semibold mb-4">{item.subject}</h2>
                 <div className="flex justify-between mb-4">
                   <div>
-                    <p className="text-sm text-gray-600">No. of Lectures</p>
+                    <p className="text-sm text-muted-foreground">No. of Lectures</p>
                     <p className="font-bold text-lg">{item.lectures}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Present</p>
+                    <p className="text-sm text-muted-foreground">Present</p>
                     <p className="font-bold text-lg">{item.present}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Absent</p>
+                    <p className="text-sm text-muted-foreground">Absent</p>
                     <p className="font-bold text-lg">{item.absent}</p>
                   </div>
                 </div>
