@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { UserAuth } from '../../Context/AuthContext'
 import toast from 'react-hot-toast'
 import {   useNavigate } from 'react-router-dom';
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, collection , addDoc} from 'firebase/firestore';
 import {Input } from '../../Components/ui/input'
 import {Label } from '../../Components/ui/label'
 import  {  Card,
@@ -20,15 +20,25 @@ const Signup = () => {
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
     const [error , setError] = useState('')
+    const [course , setCourse] = useState('')
     const navigate = useNavigate()
     const { createUser } = UserAuth();
 //onSubmit={handelsubmit} use this in form functions
 // onChange={(e) =>setEmail(e.target.value)} use this in input functions 
     const db  = getFirestore();
-    const linkUidToFirestore = async (uid, email) => {
-        const userRef = doc(db, 'Users', uid);
-        await setDoc(userRef, { uid, email, type:'student' }, { merge: true });
-      };
+    const linkUidToFirestore = async (uid, email, course) => {
+      const val = doc(db, course, uid);
+      await setDoc(val, { uid, email, type:'student' }, { merge: true });
+      const attendanceCollection = collection(val, 'attendance');
+      await setDoc(doc(attendanceCollection, 'day1'), {
+        present: true,
+      });
+    };
+    
+    
+    
+  
+  
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -36,7 +46,7 @@ const Signup = () => {
         try {
            const response =  await createUser(email, password);
             if (response.user){
-                await linkUidToFirestore(response.user.uid, email);      
+                await linkUidToFirestore(response.user.uid, email ,course);      
                 navigate('/account');
 
             }
@@ -80,6 +90,11 @@ const Signup = () => {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="Password">Password</Label>
               <Input type="password" id="password"  placeholder="••••••••"  onChange={(e) =>setPassword(e.target.value)}/>
+
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="course">Course</Label>
+              <Input type="course" id="password"  placeholder="uppercase"  onChange={(e) =>setCourse(e.target.value)}/>
 
             </div>
           </div>

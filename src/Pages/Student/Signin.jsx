@@ -21,14 +21,19 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [course, setCourse] = useState("");
   const navigate = useNavigate();
 
   const boxRef = useRef(null);
   const db = getFirestore();
 
-  const linkUidToFirestore = async (uid) => {
-    const userRef = doc(db, "Users", uid);
-    await setDoc(userRef, { uid, email }, { merge: true });
+  const linkUidToFirestore = async (uid, email, course) => {
+    const val = doc(db, course, uid);
+    await setDoc(val, { uid, email, type:'student' }, { merge: true });
+    const attendanceCollection = collection(val, 'attendance');
+    await setDoc(doc(attendanceCollection, 'day1'), {
+      present: true,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -80,6 +85,11 @@ const Signin = () => {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="Password">Password</Label>
               <Input type="password" id="password"  placeholder="••••••••"  onChange={(e) =>setPassword(e.target.value)}/>
+
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="Password">course</Label>
+              <Input type="course" id="course"  placeholder="MBATECH"  onChange={(e) =>setCourse(e.target.value)}/>
 
             </div>
           </div>
