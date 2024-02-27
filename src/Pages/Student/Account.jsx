@@ -55,7 +55,7 @@ const Account = () => {
       assignments: 10,
     },
     {
-      name: "Late Submitted",
+      name: "Submitted Late",
       assignments: 1,
     },
     {
@@ -144,13 +144,14 @@ const Account = () => {
                 >
                   <XAxis
                     dataKey="name"
-                    tick={{ fill: "hsl(var(--foreground))" }}
+                    tick={{ fill: "#ffffff" }}
                   />
                   <Tooltip
                     contentStyle={{ backgroundColor: "hsl(var(--background))" }}
                     itemStyle={{ color: "hsl(var(--foreground))" }}
+                    isAnimationActive={false}
                   />
-                  <Bar dataKey="assignments" fill="hsl(var(--primary))" />
+                  <Bar dataKey="assignments" fill="hsl(var(--primary))" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>

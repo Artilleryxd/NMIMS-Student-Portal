@@ -14,6 +14,7 @@ import { ThemeProvider } from "../src/Components/theme-provider";
 import Attendance from "./Pages/Student/Attendance/Attendance";
 import Courses from "./Pages/Student/Courses/Courses";
 import Elibrary from "./Pages/Student/Elibrary/Elibrary";
+import Profile from "./Pages/Student/Profile";
 // faculty imports
 import Facelib from "./Pages/Faculty/Facelib";
 import Facassign from "./Pages/Faculty/FacAssign";
@@ -44,6 +45,8 @@ function App() {
             <Route path="/elibrary" element={<Elibrary />} />
 
             <Route path="/assignments" element={<Assignments />} />
+
+            <Route path="/profile" element={<Profile/>}/>
 
 
 
