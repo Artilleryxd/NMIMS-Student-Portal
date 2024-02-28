@@ -13,7 +13,6 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import Profile from "../Pages/Student/Profile";
 
 const Nav = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -86,7 +85,9 @@ const Nav = () => {
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate("/Profile")}>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/Profile")}>
+                Profile
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
