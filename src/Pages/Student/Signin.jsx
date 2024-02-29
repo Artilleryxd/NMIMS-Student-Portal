@@ -25,6 +25,8 @@ const Signin = () => {
   const boxRef = useRef(null);
   const db = getFirestore();
 
+
+
   const linkUidToFirestore = async (uid, email, course) => {
     const val = doc(db, 'Users', uid);
     await setDoc(val, { uid, email, type:'student',course:course }, { merge: true });
