@@ -131,7 +131,7 @@ const Account = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip cursor={false}/>
                   <Bar dataKey="assignments" fill="#3f88c5" />
                 </BarChart>
               </ResponsiveContainer>
@@ -151,7 +151,7 @@ const Account = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis type="number" />
                   <YAxis dataKey="subName" type="category" />
-                  <Tooltip />
+                  <Tooltip cursor={false}/>
                   <Bar dataKey="attended" stackId="a" fill="#65b88f" />
                   <Bar dataKey="notAttended" stackId="a" fill="#ffaf5c" />
                 </BarChart>
