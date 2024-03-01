@@ -1,15 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "@/Context/AuthContext";
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import Nav from "@/Components/Nav";
@@ -17,12 +14,10 @@ import Footer from "@/Components/Footer";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
-
 import { Button } from "@/Components/ui/button";
 
 const Account = () => {
@@ -32,7 +27,7 @@ const Account = () => {
     navigate("/assignments");
   };
 
-  //Test Content, to be replaced by Data from Firestore
+  // Test Content, to be replaced by Data from Firestore
   const userName = "Test User";
   const newAssignments = [
     {
@@ -55,7 +50,7 @@ const Account = () => {
       assignments: 10,
     },
     {
-      name: "Late Submitted",
+      name: "Submitted Late",
       assignments: 1,
     },
     {
@@ -93,117 +88,79 @@ const Account = () => {
 
   return (
     <>
-      <Nav></Nav>
-      <div className="px-12 py-5 w-full">
-        <p className="font-bold text-5xl mx-3 my-5">Welcome, {userName}</p>
-        <div className="grid grid-rows-4 md:grid-rows-2 grid-cols-none md:grid-cols-3 gap-5 md:gap-7">
-          <Card className="md:col-span-1 row-span-1">
+      <Nav />
+      <div className="px-4 md:px-12 py-5 w-full">
+        <p className="font-bold text-3xl md:text-5xl mx-3 my-5">
+          Welcome, {userName}
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <Card>
             <CardHeader>
               <CardTitle>New Assignments</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <div>
-                {newAssignments.map((assignment, index) => (
-                  <div
-                    key={index}
-                    className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
-                  >
-                    <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        {assignment.title}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {assignment.description}
-                      </p>
-                    </div>
+              {newAssignments.map((assignment, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between border-b border-gray-200 pb-2"
+                >
+                  <div>
+                    <p className="text-lg font-semibold">{assignment.title}</p>
+                    <p className="text-sm text-gray-500">
+                      {assignment.description}
+                    </p>
                   </div>
-                ))}
-              </div>
+                  <div className="flex-shrink-0 h-3 w-3 rounded-full bg-green-500"></div>
+                </div>
+              ))}
             </CardContent>
             <CardFooter>
-              <Button className="w-full" onClick={navAssignments}>
-                View All
-              </Button>
+              <Button onClick={navAssignments}>View All</Button>
             </CardFooter>
           </Card>
-          <Card className="md:col-span-2 row-span-1">
+          <Card>
             <CardHeader>
-              <CardTitle>History</CardTitle>
+              <CardTitle>Assignment Summary</CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center items-center">
-              <ResponsiveContainer width="90%" height={230}>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                   data={data}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fill: "hsl(var(--foreground))" }}
-                  />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: "hsl(var(--background))" }}
-                    itemStyle={{ color: "hsl(var(--foreground))" }}
-                  />
-                  <Bar dataKey="assignments" fill="hsl(var(--primary))" />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip cursor={false}/>
+                  <Bar dataKey="assignments" fill="#3f88c5" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
-          <Card className="md:col-span-2 row-span-1">
+          <Card>
             <CardHeader>
-              <CardTitle>Attendance</CardTitle>
+              <CardTitle>Attendance Summary</CardTitle>
             </CardHeader>
-            <ResponsiveContainer width="90%" height={230}>
-              <BarChart
-                data={attendance}
-                layout="vertical"
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <XAxis
-                  type="number"
-                  tick={{ fill: "hsl(var(--foreground))" }}
-                />
-                <YAxis
-                  type="category"
-                  dataKey="subName"
-                  tick={{ fill: "hsl(var(--foreground))" }}
-                />
-                <Tooltip
-                  contentStyle={{ backgroundColor: "hsl(var(--background)) " }}
-                  itemStyle={{ color: "hsl(var(--foreground))" }}
-                />
-                <Bar
-                  dataKey="attended"
-                  stackId="a"
-                  fill="hsl(var(--primary))"
-                />
-                <Bar
-                  dataKey="notAttended"
-                  stackId="a"
-                  fill="hsl(var(--muted))"
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
-          <Card className="col-span-1">
-            <CardHeader>
-              <CardTitle>Your QR</CardTitle>
-            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={attendance}
+                  layout="vertical"
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="subName" type="category" />
+                  <Tooltip cursor={false}/>
+                  <Bar dataKey="attended" stackId="a" fill="#65b88f" />
+                  <Bar dataKey="notAttended" stackId="a" fill="#ffaf5c" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
           </Card>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

@@ -63,8 +63,8 @@ const Signin = () => {
   return (
     <>
       <div className="z-20">
-        <div class="flex justify-between items-center space-x-4 m-4">
-          <div class="flex-shrink-0 border rounded-sm p-2">
+        <div className="flex justify-between items-center space-x-4 m-4">
+          <div className="flex-shrink-0 border rounded-sm p-2">
             <a href="/">
               <School />
             </a>
@@ -96,7 +96,7 @@ const Signin = () => {
                 </div>
               </div>
               <div className="flex justify-between space-x-4 ">
-                <Button variant="ghost" class=" text-xs ml-2 " onSubmit={() => { }}>Forgot Password ? </Button>
+                <Button variant="ghost" className=" text-xs ml-2 " onSubmit={() => { }}>Forgot Password ? </Button>
                 <Button className="mt-4">Login</Button>
               </div>
               <p className='text-xs justify-center mt-8'>Don't Have an account yet? <span className=' text-blue-600'><a href="/signup">Sign Up </a></span></p>
