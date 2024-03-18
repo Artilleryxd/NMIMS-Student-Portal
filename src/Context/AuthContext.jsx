@@ -20,9 +20,9 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = () => {
-    return signOut(auth);
-  };
+    const logout = () => {
+      return signOut(auth);
+    };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

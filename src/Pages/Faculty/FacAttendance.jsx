@@ -2,7 +2,10 @@ import React from 'react'
 
 const Facattendance = () => {
   return (
-    <div>Facattendance</div>
+    <div>
+      <h1>Faculty Attendance</h1>
+      
+    </div>
   )
 }
 
