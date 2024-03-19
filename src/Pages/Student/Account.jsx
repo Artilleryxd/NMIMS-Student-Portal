@@ -27,7 +27,7 @@ import {
   query,
   addDoc,
 } from "firebase/firestore";
-import { useRef , useEffect} from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "@/Components/ui/button";
 import { UserAuth } from "@/Context/AuthContext";
 import ChatBot from "@/Components/ui/chatbot";
@@ -36,12 +36,11 @@ const Account = () => {
   const navigate = useNavigate();
   const [chatbotInitialized, setChatbotInitialized] = useState(false);
 
-  
   const { user } = UserAuth();
   const db = getFirestore();
   const boxRef = useRef(null);
 
-  // card assignment logic 
+  // card assignment logic
 
   const [assignments, setAssignments] = useState([]);
 
@@ -60,8 +59,6 @@ const Account = () => {
     fetchAssignments();
   }, [db, user.uid]);
 
-
-
   const handleCheckboxChange = (event, userId) => {
     if (event.target.checked) {
       setSelectedUsers([...selectedUsers, userId]);
@@ -70,11 +67,6 @@ const Account = () => {
     }
   };
 
-
-
-
-
-
   const handleChatbotInit = () => {
     setChatbotInitialized(true);
   };
@@ -82,7 +74,6 @@ const Account = () => {
   const navAssignments = () => {
     navigate("/assignments");
   };
-
 
   const userName = "Test User";
   const newAssignments = [
@@ -150,32 +141,33 @@ const Account = () => {
           Welcome, {userName}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>New Assignments</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              {assignments.map((assignment, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between border-b border-gray-200 pb-2"
+                >
+                  <div>
+                    <p className="text-lg font-semibold">
+                      {assignment.assignment}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Submitted: {assignment.submit ? "Yes" : "No"}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0 h-3 w-3 rounded-full bg-green-500"></div>
+                </div>
+              ))}
+            </CardContent>
+            <CardFooter>
+              <Button onClick={navAssignments}>View All</Button>
+            </CardFooter>
+          </Card>
 
-<CardHeader>
-  <CardTitle>New Assignments</CardTitle>
-</CardHeader>
-<CardContent className="grid gap-4">
-  {assignments.map((assignment, index) => (
-    <div
-      key={index}
-      className="flex items-center justify-between border-b border-gray-200 pb-2"
-    >
-      <div>
-        <p className="text-lg font-semibold">{assignment.assignment}</p>
-        <p className="text-sm text-gray-500">
-          Submitted: {assignment.submit ? "Yes" : "No"}
-        </p>
-      </div>
-      <div className="flex-shrink-0 h-3 w-3 rounded-full bg-green-500"></div>
-    </div>
-  ))}
-</CardContent>
-<CardFooter>
-  <Button onClick={navAssignments}>View All</Button>
-</CardFooter>
-</Card>
-          
           <Card>
             <CardHeader>
               <CardTitle>Assignment Summary</CardTitle>
@@ -187,8 +179,11 @@ const Account = () => {
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" tick={{ fill: "hsl(var(--foreground))" }}/>
-                  <YAxis tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: "hsl(var(--foreground))" }}
+                  />
+                  <YAxis tick={{ fill: "hsl(var(--foreground))" }} />
                   <Tooltip
                     cursor={false}
                     contentStyle={{ backgroundColor: "hsl(var(--background))" }}
@@ -211,8 +206,15 @@ const Account = () => {
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" tick={{ fill: "hsl(var(--foreground))" }}/>
-                  <YAxis dataKey="subName" type="category" tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <XAxis
+                    type="number"
+                    tick={{ fill: "hsl(var(--foreground))" }}
+                  />
+                  <YAxis
+                    dataKey="subName"
+                    type="category"
+                    tick={{ fill: "hsl(var(--foreground))" }}
+                  />
                   <Tooltip
                     cursor={false}
                     contentStyle={{
