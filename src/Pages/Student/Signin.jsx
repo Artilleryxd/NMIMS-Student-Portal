@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../Context/AuthContext";
-import { setDoc, getFirestore, doc } from "firebase/firestore";
+import { setDoc, getFirestore, doc, collection , getDoc} from "firebase/firestore";
 import toast from "react-hot-toast";
 
 import { Input } from '../../Components/ui/input';
@@ -25,8 +25,6 @@ const Signin = () => {
   const boxRef = useRef(null);
   const db = getFirestore();
 
-
-
   const linkUidToFirestore = async (uid, email, course) => {
     const val = doc(db, 'Users', uid);
     await setDoc(val, { uid, email, type:'student',course:course }, { merge: true });
@@ -42,14 +40,35 @@ const Signin = () => {
     try {
       await signIn(email, password);
       if (user) {
-        await linkUidToFirestore(user.uid);
+        const userType = await getUserType(user.uid);
+        if (userType === "fac") {
+          navigate("/fac/home");
+        } else if (userType === "student") {
+          await linkUidToFirestore(user.uid, email, course);
+          toast.success("Logged in Successfully");
+          navigate("/account");
+        } else {
+          throw new Error("Invalid user type.");
+        }
       }
-      toast.success("Logged in Sucessfully");
-      // TODO: Redirect faculty to faculty page and student to student page
-      navigate("/account");
     } catch (error) {
       setError(error.message);
       toast.error(error.message);
+    }
+  };
+
+  const getUserType = async (uid) => {
+    try {
+      const userDocRef = doc(db, 'Users', uid);
+      const userDocSnapshot = await getDoc(userDocRef);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        return userData.type;
+      } else {
+        throw new Error("User document does not exist.");
+      }
+    } catch (error) {
+      throw new Error("Error fetching user type: " + error.message);
     }
   };
 
