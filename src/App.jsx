@@ -20,7 +20,13 @@ import Facelib from "./Pages/Faculty/Facelib";
 import Facassign from "./Pages/Faculty/FacAssign";
 import Facattendance from "./Pages/Faculty/FacAttendance";
 import Faccontact from "./Pages/Faculty/FacContact";
+
+import ChatBot from "./Components/ui/chatbot";
+
+ 
 function App() {
+  
+
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -33,10 +39,20 @@ function App() {
               path="/account"
               element={
                 <ProtectedRoute>
+                  <>
                   <Account />
+                  
+                  
+            
+                  </>
+                  
                 </ProtectedRoute>
+
               }
+
             />
+            
+
            
            <Route path="/attendance" element={<Attendance />} />
 
@@ -56,6 +72,7 @@ function App() {
               element={
                 <ProtectedRoutesByType>
                   <Home />
+                  
                 </ProtectedRoutesByType>
               }
             />
@@ -92,6 +109,9 @@ function App() {
               }
             />
           </Routes>
+
+          
+        
           
         </AuthContextProvider>
       </ThemeProvider>
