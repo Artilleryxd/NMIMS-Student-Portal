@@ -119,7 +119,7 @@ const Signin = () => {
       </div>
 
       <div className="flex items-center justify-center min-h-screen">
-        <Card className="w-[350px] z-20">
+        <Card className="w-[350px] z-20 opacity-80">
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
             <CardDescription>Welcome to NMIMS University </CardDescription>
