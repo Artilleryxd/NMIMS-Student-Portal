@@ -109,10 +109,7 @@ const Signin = () => {
                   <Label htmlFor="Password">Password</Label>
                   <Input type="password" id="password" placeholder={placeholder.password} onBlur={() => setPlaceholder({ email: "", password: "" })} onClick={() => setPlaceholder({ password: "••••••••" })} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="course">Course</Label>
-                  <Input type="course" id="course" placeholder={placeholder.course} onBlur={() => setPlaceholder({ email: "", password: "" })} onClick={() => setPlaceholder({ password: "BTECH" })} onChange={(e) => setCourse(e.target.value)} />
-                </div>
+               
               </div>
               <div className="flex justify-between space-x-4 ">
                 <Button variant="ghost" className=" text-xs ml-2 " onSubmit={() => { }}>Forgot Password ? </Button>
