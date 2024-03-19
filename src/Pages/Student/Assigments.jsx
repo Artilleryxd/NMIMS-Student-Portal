@@ -61,7 +61,8 @@ const Assignments = () => {
                 Submitted: {assignment.submit ? "Yes" : "No"}
               </p>
             </div>
-            <div className="flex-shrink-0 h-3 w-3 rounded-full bg-green-500"></div>
+            {/* fixed the class and variable name */}
+            <div className={`flex-shrink-0 h-3 w-3 rounded-full ${assignment.submit ? 'bg-green-500' : 'bg-red-500'}`}></div>
           </div>
         ))}
       </CardContent>
