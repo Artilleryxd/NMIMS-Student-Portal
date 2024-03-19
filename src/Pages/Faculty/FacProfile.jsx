@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../../Components/Nav";
+import Nav from "../../Components/Faculty/Nav";
 import { useTheme } from "../../Components/theme-provider";
 import {
   Card,
@@ -14,10 +14,9 @@ import { Input } from "../../Components/ui/input";
 import { Label } from "../../Components/ui/label";
 
 import { Button } from "../../Components/ui/button";
-
 import Footer from "../../Components/Footer";
 
-const Profile = () => {
+const FacProfile = () => {
   const [userDetails, setUserDetails] = useState({
     name: "",
     dob: "",
@@ -148,19 +147,6 @@ const Profile = () => {
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="year" className="block text-sm font-medium">
-                    Year
-                  </Label>
-                  <Input
-                    type="text"
-                    id="year"
-                    name="year"
-                    value={userDetails.year}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
                   <Label
                     htmlFor="department"
                     className="block text-sm font-medium"
@@ -215,7 +201,7 @@ const Profile = () => {
           <div className="w-full">
             <Card>
               <CardHeader>
-                <CardTitle>Student Details</CardTitle>
+                <CardTitle>Faculty Details</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="grid w-full items-center gap-4">
@@ -235,9 +221,6 @@ const Profile = () => {
                     <strong>College Email:</strong> {userDetails.collegeEmail}
                   </li>
                   <li>
-                    <strong>Year:</strong> {userDetails.year}
-                  </li>
-                  <li>
                     <strong>Department:</strong> {userDetails.department}
                   </li>
                 </ul>
@@ -251,4 +234,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default FacProfile;

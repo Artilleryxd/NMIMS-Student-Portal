@@ -129,9 +129,13 @@ const Account = () => {
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip cursor={false}/>
+                  <XAxis dataKey="name" tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <YAxis tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <Tooltip
+                    cursor={false}
+                    contentStyle={{ backgroundColor: "hsl(var(--background))" }}
+                    itemStyle={{ color: "hsl(var(--foreground))" }}
+                  />
                   <Bar dataKey="assignments" fill="#3f88c5" />
                 </BarChart>
               </ResponsiveContainer>
@@ -149,9 +153,15 @@ const Account = () => {
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="subName" type="category" />
-                  <Tooltip cursor={false}/>
+                  <XAxis type="number" tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <YAxis dataKey="subName" type="category" tick={{ fill: "hsl(var(--foreground))" }}/>
+                  <Tooltip
+                    cursor={false}
+                    contentStyle={{
+                      backgroundColor: "hsl(var(--background)) ",
+                    }}
+                    itemStyle={{ color: "hsl(var(--foreground))" }}
+                  />
                   <Bar dataKey="attended" stackId="a" fill="#65b88f" />
                   <Bar dataKey="notAttended" stackId="a" fill="#ffaf5c" />
                 </BarChart>
