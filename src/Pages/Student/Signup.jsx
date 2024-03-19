@@ -73,9 +73,20 @@ const Signup = () => {
 
   return (
     <>
-      <div className="z-20">
-        <div class="flex justify-between items-center space-x-4 m-4">
-          <div class="flex-shrink-0 border rounded-sm p-2">
+      <video
+        autoPlay
+        muted
+        loop
+        id="myVideo"
+        className="min-w-full min-h-full fixed z-0 object-cover opacity-50"
+      >
+        <source src="videos/signup-bg-1.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+
+      <div className="z-20 absolute top-0 left-0 right-0">
+        <div className="flex justify-between items-center space-x-4 m-4">
+          <div className="flex-shrink-0 border rounded-sm p-2">
             <a href="/">
               <School />
             </a>
@@ -84,15 +95,15 @@ const Signup = () => {
         </div>
       </div>
 
-      <div className="h-lvh flex items-center justify-center">
-        <Card className="w-[350px] z-20">
+      <div className="h-screen flex items-center justify-center">
+        <Card className="w-[350px] z-20 opacity-80">
           <CardHeader>
             <CardTitle>Sign Up</CardTitle>
             <CardDescription>Welcome to NMIMS University </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
-              <div className="grid w-full items-center gap-4">
+              <div className="grid gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="email">Email Address</Label>
                   <Input
@@ -106,6 +117,7 @@ const Signup = () => {
                       })
                     }
                     onChange={(e) => setEmail(e.target.value)}
+                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
@@ -117,6 +129,7 @@ const Signup = () => {
                     onBlur={() => setPlaceholder({ email: "", password: "" })}
                     onClick={() => setPlaceholder({ password: "••••••••" })}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
@@ -125,8 +138,8 @@ const Signup = () => {
                     id="course"
                     onChange={(e) => setCourse(e.target.value)}
                     value={course}
-                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-white"
-                    style={{ height: "2.5rem" }} // Adjust height here
+                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
+                    style={{ height: "2.5rem" }}
                   >
                     <option value="">Select Course</option>
                     {courses.map((course, index) => (
@@ -136,16 +149,16 @@ const Signup = () => {
                     ))}
                   </select>
                 </div>
-              </div>
-              <div className="flex justify-between space-x-4">
-                <Button
-                  variant="ghost"
-                  className="text-xs ml-2"
-                  onSubmit={() => {}}
-                >
-                  Forgot Password?
-                </Button>
-                <Button className="mt-4">Sign Up</Button>
+                <div className="flex justify-between space-x-4 mt-4">
+                  <Button
+                    variant="ghost"
+                    className="text-xs ml-2"
+                    onSubmit={() => {}}
+                  >
+                    Forgot Password?
+                  </Button>
+                  <Button>Sign Up</Button>
+                </div>
               </div>
               <p className="text-xs justify-center mt-8">
                 Already have an account?{" "}
