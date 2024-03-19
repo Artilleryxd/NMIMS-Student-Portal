@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import the styles
+import Nav from "../../Components/Faculty/Nav";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import Footer from "../../Components/Footer";
 
 const Facattendance = () => {
-  return (
-    <div>
-      <h1>Faculty Attendance</h1>
-      
-    </div>
-  )
-}
+  const [selectedDate, setSelectedDate] = useState(null);
 
-export default Facattendance
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  return (
+    <div className>
+      <Nav />
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default Facattendance;
