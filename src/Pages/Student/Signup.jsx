@@ -32,12 +32,18 @@ const Signup = () => {
     const { createUser } = UserAuth();
 //onSubmit={handelsubmit} use this in form functions
 // onChange={(e) =>setEmail(e.target.value)} use this in input functions 
+    
     const db  = getFirestore();
+
     const linkUidToFirestore = async (uid, email, course) => {
       const val = doc(db, 'Users', uid);
       await setDoc(val, { uid, email, type:'student' ,course:course }, { merge: true });
       const attendanceCollection = collection(val, 'attendance');
       await setDoc(doc(attendanceCollection, 'day1'), {
+        present: true,
+      });
+      const assignmentCollection = collection(val, 'assignment');
+      await setDoc(doc(assignmentCollection, 'assign1'), {
         present: true,
       });
     };
