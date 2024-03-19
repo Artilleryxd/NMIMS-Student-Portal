@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import {
   BarChart,
@@ -20,8 +21,15 @@ import {
 } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
 
+import ChatBot from "@/Components/ui/chatbot";
+
 const Account = () => {
   const navigate = useNavigate();
+  const [chatbotInitialized, setChatbotInitialized] = useState(false);
+
+  const handleChatbotInit = () => {
+    setChatbotInitialized(true);
+  };
 
   const navAssignments = () => {
     navigate("/assignments");
@@ -117,8 +125,7 @@ const Account = () => {
             <CardFooter>
               <Button onClick={navAssignments}>View All</Button>
             </CardFooter>
-          </Card>
-          <Card>
+          </Card><Card>
             <CardHeader>
               <CardTitle>Assignment Summary</CardTitle>
             </CardHeader>
@@ -170,6 +177,11 @@ const Account = () => {
           </Card>
         </div>
       </div>
+
+      <div className="chatbot-container">
+        {!chatbotInitialized && <ChatBot onInit={handleChatbotInit} />}
+      </div>
+
       <Footer />
     </>
   );

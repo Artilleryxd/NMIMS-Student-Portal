@@ -7,7 +7,9 @@ const Assignments = () => {
         <>
         <Nav></Nav>
         <Footer></Footer>
+        
         </>
+
     )
 }
 
