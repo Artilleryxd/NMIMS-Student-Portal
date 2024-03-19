@@ -8,17 +8,12 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { UserAuth } from "../../Context/AuthContext";
-import { useRef } from "react";
 import Nav from "../../Components/Faculty/Nav";
-import { Checkbox } from "../../Components/ui/checkbox";
 import { Input } from "../../Components/ui/input";
-import { Label } from "../../Components/ui/label";
 import { Button } from "../../Components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../Components/ui/card";
@@ -28,18 +23,16 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
   TableRow,
 } from "@/Components/ui/table";
 
 const Facassign = () => {
   const { user } = UserAuth();
   const db = getFirestore();
-  const boxRef = useRef(null);
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [courseFilter, setCourseFilter] = useState("BTECH"); // default value is BTECH
-  const [assignment, setAssignment] = useState(""); // State to hold the assignment name
+  const [courseFilter, setCourseFilter] = useState("BTECH");
+  const [assignment, setAssignment] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,26 +58,18 @@ const Facassign = () => {
   };
 
   const handleSubmit = async () => {
-    // Check if assignment name is provided
     if (!assignment.trim()) {
       console.error("Assignment name is required.");
       return;
     }
 
-    // Loop through selected users and add assignment
     for (const userId of selectedUsers) {
       const user = users.find((u) => u.id === userId);
       if (user) {
-        const uid = user.id; // Assuming uid is stored in 'id' field
-
-        // Create a document reference with the correct path
+        const uid = user.id;
         const assignmentRef = collection(db, `Users/${uid}/assignment`);
 
-        // Add a document with the assignment data
-        await addDoc(assignmentRef, {
-          assignment: assignment, // Use 'assignment' variable as a field
-          submit: false,
-        })
+        await addDoc(assignmentRef, { assignment: assignment, submit: false })
           .then(() => {
             console.log("Assignment added with path: Users/${uid}/assignment");
           })
@@ -118,69 +103,78 @@ const Facassign = () => {
   return (
     <>
       <Nav />
-      <div className="px-4 md:px-12 py-5 w-full">
-        <p className="font-bold text-3xl md:text-5xl mx-3 my-5">Assignments</p>
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Assignment</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Label htmlFor="assignment_name">Assignment Name</Label>
-            <Input
-              type="text"
-              id="assignment_name"
-              value={assignment}
-              onChange={(e) => {
-                setAssignment(e.target.value);
-              }} // Assign Input change handler
-            />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Filter</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Label htmlFor="courseFilter">Filter by Course:</Label>
-            <Input
-              type="text"
-              id="courseFilter"
-              value={courseFilter}
-              onChange={handleCourseFilterChange}
-            />
-            <Button onClick={handleFilterSubmit}>Submit Filter</Button>
-          </CardContent>
-        </Card>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Create Assignment</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                type="text"
+                placeholder="Enter Assignment Name"
+                value={assignment}
+                onChange={(e) => {
+                  setAssignment(e.target.value);
+                }}
+                className="mb-4"
+              />
+              <Button onClick={handleSubmit} className="w-full">
+                Create Assignment
+              </Button>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Filter</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                type="text"
+                placeholder="Filter by Course"
+                value={courseFilter}
+                onChange={handleCourseFilterChange}
+                className="mb-4"
+              />
+              <Button onClick={handleFilterSubmit} className="w-full">
+                Apply Filter
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="rounded-md border overflow-x-auto">
+          <Table className="min-w-full">
+            <TableHead>
               <TableRow>
-                <TableHead>Checkbox</TableHead>
-                <TableHead>Email</TableHead>
+                <TableCell className="w-1/12">Checkbox</TableCell>
+                <TableCell>Email</TableCell>
               </TableRow>
-            </TableHeader>
+            </TableHead>
             <TableBody>
-              {users.map((userData, index) => (
+              {users.map((userData) => (
                 <TableRow key={userData.id}>
-                  <TableCell className="w-full flex justify-center">
-                    <Input
+                  <TableCell className="align-middle">
+                    <input
                       type="checkbox"
                       checked={selectedUsers.includes(userData.id)}
                       onChange={(event) =>
                         handleCheckboxChange(event, userData.id)
                       }
-                      className="w-5"
                     />
                   </TableCell>
-                  <TableCell>{userData.email}</TableCell>
+                  <TableCell className="align-middle">
+                    {userData.email}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} className="mt-4 w-full">
+          Assign
+        </Button>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };
