@@ -114,7 +114,6 @@ const Facassign = () => {
 
   const handleCourseFilterChange = (value) => {
     setCourseFilter(value);
-    console.log(value);
   };
 
   const handleFilterSubmit = async () => {

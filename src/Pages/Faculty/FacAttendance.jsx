@@ -1,4 +1,3 @@
-// Import the necessary components
 import React, { useState, useEffect } from "react";
 import {
   getFirestore,
@@ -32,6 +31,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import DatePicker from "../../Components/DatePicker";
+import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/ui/select";
+import { sub } from "date-fns";
 
 const Facattendance = () => {
   const { user } = UserAuth();
@@ -41,6 +50,9 @@ const Facattendance = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [courseFilter, setCourseFilter] = useState("BTECH");
   const [attendance, setAttendance] = useState(""); // State to hold the attendance name
+  const [date, setDate] = useState(new Date());
+  const [maxMarks, setMaxMarks] = useState("");
+  const [subject, setSubject] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,8 +69,8 @@ const Facattendance = () => {
     fetchUsers();
   }, [db]);
 
-  const handleCheckboxChange = (event, userId) => {
-    if (event.target.checked) {
+  const handleCheckboxChange = (value, userId) => {
+    if (value) {
       setSelectedUsers([...selectedUsers, userId]);
     } else {
       setSelectedUsers(selectedUsers.filter((id) => id !== userId));
@@ -67,8 +79,9 @@ const Facattendance = () => {
 
   const handleSubmit = async () => {
     // Check if attendance name is provided
-    if (!attendance.trim()) {
-      console.error("Date is required.");
+
+    if (subject == "") {
+      toast.error("Select Subject");
       return;
     }
 
@@ -83,22 +96,24 @@ const Facattendance = () => {
 
         // Add a document with the attendance data
         await addDoc(attendanceRef, {
-          attendance: attendance, // Use 'attendance' variable as a field
-          submit: false,
+          date: date, // Use 'attendance' variable as a field
+          present: true,
+          subject: subject,
         })
           .then(() => {
             console.log("Attendance added with path: Users/${uid}/attendance");
+            toast.success("Attendace Added Successfully");
           })
           .catch((error) => {
-            console.error("Error adding attendance: ", error);
+            toast.error("Error adding attendance: ", error);
           });
       }
     }
     setSelectedUsers([]);
   };
 
-  const handleCourseFilterChange = (event) => {
-    setCourseFilter(event.target.value);
+  const handleCourseFilterChange = (value) => {
+    setCourseFilter(value);
   };
 
   const handleFilterSubmit = async () => {
@@ -120,70 +135,92 @@ const Facattendance = () => {
     <>
       <Nav />
       <div className="px-4 md:px-12 py-5 w-full">
-        <p className="font-bold text-3xl md:text-5xl mx-3 my-5">Attendances</p>
-        <Card>
-          <CardHeader>
-            <CardTitle>Select Date</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Label htmlFor="attendance_date">Attendance Date</Label>
-            <Input
-              type="date"
-              id="attendance_date"
-              value={attendance}
-              onChange={(e) => {
-                setAttendance(e.target.value);
-              }} // Assign Input change handler
-            />
+        <p className="font-bold text-3xl md:text-5xl mx-3 my-5">Assignments</p>
+        <Card className="grid grid-cols-3 grid-row-2">
+          <div className="col-span-3">
+            <CardHeader>
+              <CardTitle>Create Assignment</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Select Date</Label>
+                <br />
+                <DatePicker
+                  onChange={(date) => setDate(date)}
+                  className="w-full"
+                ></DatePicker>
+              </div>
+              <div>
+                <Label>Select Subject</Label>
+                <Select onValueChange={setSubject} defaultValue={subject}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Subject" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="DBMS">DBMS</SelectItem>
+                    <SelectItem value="MPMC">MPMC</SelectItem>
+                    <SelectItem value="COA">COA</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </div>
+          <div className="col-span-1">
+            <CardHeader>
+              <CardTitle>Filter</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-4">
+                <Label htmlFor="courseFilter">Filter by Course:</Label>
+                <Select
+                  onValueChange={handleCourseFilterChange}
+                  defaultValue={courseFilter}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="MBATECH">MBATECH</SelectItem>
+                    <SelectItem value="BTECH">BTECH</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button onClick={handleFilterSubmit}>Filter</Button>
+              </div>
+            </CardContent>
+          </div>
+          <CardContent className="col-span-2">
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Checkbox</TableHead>
+                    <TableHead>Email</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((userData, index) => (
+                    <TableRow key={userData.id}>
+                      <TableCell className="w-full flex justify-center">
+                        <Checkbox
+                          checked={selectedUsers.includes(userData.id)}
+                          onCheckedChange={(value) =>
+                            handleCheckboxChange(value, userData.id)
+                          }
+                        ></Checkbox>
+                      </TableCell>
+                      <TableCell>{userData.email}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
+          <CardFooter className="col-span-3">
+            <Button onClick={handleSubmit} className="w-full">
+              Add
+            </Button>
+          </CardFooter>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Filter</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Label htmlFor="courseFilter">Filter by Course:</Label>
-            <select
-              id="courseFilter"
-              value={courseFilter}
-              onChange={handleCourseFilterChange}
-            >
-              <option value="BTECH">BTECH</option>
-              <option value="MTECH">MTECH</option>
-              <option value="BCA">BCA</option>
-              <option value="MCA">MCA</option>
-            </select>
-            <Button onClick={handleFilterSubmit}>Submit Filter</Button>
-          </CardContent>
-        </Card>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Checkbox</TableHead>
-                <TableHead>Email</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((userData, index) => (
-                <TableRow key={userData.id}>
-                  <TableCell className="w-full flex justify-center">
-                    <Input
-                      type="checkbox"
-                      checked={selectedUsers.includes(userData.id)}
-                      onChange={(event) =>
-                        handleCheckboxChange(event, userData.id)
-                      }
-                      className="w-5"
-                    />
-                  </TableCell>
-                  <TableCell>{userData.email}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        <Button onClick={handleSubmit}>Submit</Button>
       </div>
       <Footer></Footer>
     </>
