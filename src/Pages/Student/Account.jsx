@@ -35,7 +35,7 @@ import ChatBot from "@/Components/ui/chatbot";
 const Account = () => {
   const navigate = useNavigate();
   const [chatbotInitialized, setChatbotInitialized] = useState(false);
-
+  const [attendanceData, setAttendanceData] = useState([]);
   const { user } = UserAuth();
   const db = getFirestore();
   const boxRef = useRef(null);
@@ -59,14 +59,6 @@ const Account = () => {
     fetchAssignments();
   }, [db, user.uid]);
 
-  const handleCheckboxChange = (event, userId) => {
-    if (event.target.checked) {
-      setSelectedUsers([...selectedUsers, userId]);
-    } else {
-      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
-    }
-  };
-
   const handleChatbotInit = () => {
     setChatbotInitialized(true);
   };
@@ -75,19 +67,42 @@ const Account = () => {
     navigate("/assignments");
   };
 
-  const userName = "Test User";
-  const newAssignments = [
+  const userName = user.email;
+
+  useEffect(() => {
+    const fetchAttendance = async () => {
+      const attendanceRef = collection(db, `Users/${user.uid}/attendance`);
+      const attendanceSnapshot = await getDocs(attendanceRef);
+      const attendanceData = attendanceSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setAttendanceData(attendanceData);
+    };
+
+    fetchAttendance();
+  }, [db, user.uid]);
+
+  // Sample data for the BarChart (Replace with your actual attendance summary data)
+
+  const attendanceSummaryData = [
     {
-      title: "OOPJ Lab 7",
-      description: "Due on 29/02/24",
+      subject: "COA",
+      count: attendanceData.filter((entry) => {
+        return entry.subject == "COA";
+      }).length,
     },
     {
-      title: "DBMS Lab 8",
-      description: "Due on 1/03/24",
+      subject: "MPMC",
+      count: attendanceData.filter((entry) => {
+        return entry.subject == "MPMC";
+      }).length,
     },
     {
-      title: "WP Assignment 2",
-      description: "Due on 3/03/24",
+      subject: "DBMS",
+      count: attendanceData.filter((entry) => {
+        return entry.subject == "DBMS";
+      }).length,
     },
   ];
 
@@ -107,29 +122,6 @@ const Account = () => {
     {
       name: "Past Due",
       assignments: 2,
-    },
-  ];
-
-  const attendance = [
-    {
-      subName: "DBMS",
-      attended: 12,
-      notAttended: 5,
-    },
-    {
-      subName: "OOPJ",
-      attended: 12,
-      notAttended: 2,
-    },
-    {
-      subName: "CVT",
-      attended: 20,
-      notAttended: 5,
-    },
-    {
-      subName: "COA",
-      attended: 20,
-      notAttended: 3,
     },
   ];
 
@@ -201,7 +193,7 @@ const Account = () => {
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart
-                  data={attendance}
+                  data={attendanceSummaryData} // Use your actual attendance summary data here
                   layout="vertical"
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
@@ -211,7 +203,7 @@ const Account = () => {
                     tick={{ fill: "hsl(var(--foreground))" }}
                   />
                   <YAxis
-                    dataKey="subName"
+                    dataKey="subject"
                     type="category"
                     tick={{ fill: "hsl(var(--foreground))" }}
                   />
@@ -222,8 +214,7 @@ const Account = () => {
                     }}
                     itemStyle={{ color: "hsl(var(--foreground))" }}
                   />
-                  <Bar dataKey="attended" stackId="a" fill="#65b88f" />
-                  <Bar dataKey="notAttended" stackId="a" fill="#ffaf5c" />
+                  <Bar dataKey="count" fill="#65b88f" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>

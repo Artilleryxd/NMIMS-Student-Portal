@@ -72,8 +72,6 @@ const Attendance = () => {
           <CardTitle>Attendance Summary</CardTitle>
         </CardHeader>
         <CardContent>
-          {console.log(attendanceSummaryData)}
-          {console.log(attendanceData)}
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={attendanceSummaryData} // Use your actual attendance summary data here
@@ -124,9 +122,6 @@ const Attendance = () => {
           ))}
         </CardContent>
         <CardFooter>
-          <Button onClick={() => navigate("/assignments")}>
-            View Assignments
-          </Button>
         </CardFooter>
       </Card>
     </>
