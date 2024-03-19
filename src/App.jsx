@@ -20,6 +20,7 @@ import Facelib from "./Pages/Faculty/Facelib";
 import Facassign from "./Pages/Faculty/FacAssign";
 import Facattendance from "./Pages/Faculty/FacAttendance";
 import Faccontact from "./Pages/Faculty/FacContact";
+import FacProfile from "./Pages/Faculty/FacProfile";
 function App() {
   return (
     <>
@@ -37,8 +38,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-           
-           <Route path="/attendance" element={<Attendance />} />
+
+            <Route path="/attendance" element={<Attendance />} />
 
             <Route path="/courses" element={<Courses />} />
 
@@ -46,9 +47,7 @@ function App() {
 
             <Route path="/assignments" element={<Assignments />} />
 
-            <Route path="/profile" element={<Profile/>}/>
-
-
+            <Route path="/profile" element={<Profile />} />
 
             {/* faculty routes */}
             <Route
@@ -59,7 +58,7 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
-             <Route
+            <Route
               path="/fac/e-library"
               element={
                 <ProtectedRoutesByType>
@@ -75,7 +74,7 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
-              <Route
+            <Route
               path="/fac/assignments"
               element={
                 <ProtectedRoutesByType>
@@ -83,7 +82,15 @@ function App() {
                 </ProtectedRoutesByType>
               }
             />
-             <Route
+            <Route
+              path="/fac/profile"
+              element={
+                <ProtectedRoutesByType>
+                  <FacProfile />
+                </ProtectedRoutesByType>
+              }
+            />
+            <Route
               path="/fac/contact-us"
               element={
                 <ProtectedRoutesByType>
@@ -92,7 +99,6 @@ function App() {
               }
             />
           </Routes>
-          
         </AuthContextProvider>
       </ThemeProvider>
     </>

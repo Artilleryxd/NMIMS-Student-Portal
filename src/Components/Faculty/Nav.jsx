@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
-import { UserAuth } from '../../Context/AuthContext';
+import React, { useState } from "react";
+import { UserAuth } from "../../Context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import { useTheme } from "../../Components/theme-provider";
+import ModeToggle from "../ui/mode-toggle";
+import { Button } from "../ui/button";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../Components/ui/avatar"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+
 const Nav = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const { theme } = useTheme(); // Get the current theme
 
   const toggleUserDropdown = () => {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
-  const { user } = UserAuth();
+
+  const { user, logout } = UserAuth();
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -22,98 +35,105 @@ const Nav = () => {
     }
   };
 
+  const navButtons = [
+    {
+      text: "Home",
+      link: "/fac/home",
+    },
+    {
+      text: "Attendance",
+      link: "/fac/attendance",
+    },
+    {
+      text: "Assignments",
+      link: "/fac/assignments",
+    },
+    {
+      text: "E-Library",
+      link: "/fac/e-library",
+    },
+    {
+      text: "Contact Us",
+      link: "/fac/contact-us",
+    },
+  ];
+
   return (
-    <div>
-      <nav className="">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="flex items-center justify-between py-4">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-2xl font-semibold whitespace-nowrap text-rose-700 dark:text-rose-700 border-b-white">Portal</span>
-              </a>
-            </div>
-            <div className="hidden md:flex md:w-auto md:items-center md:space-x-8 rtl:space-x-reverse" id="navbar-user">
-              <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0">
-            
-                <li>
-                  <a href="#" className="text-white py-2 px-3 border-b-2 border-transparent " aria-current="page">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-white py-2 px-3 border-b-2 border-transparent ">
-                    Attendance
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-white py-2 px-3 border-b-2 border-transparent ">
-                    Courses
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-white py-2 px-3 border-b-2 border-transparent ">
-                    E Library
-                  </a>
-                </li>
-                <li>
-                  <a               onClick={handleLogout}
-  className="text-white py-2 px-3 border-b-2 border-transparent ">
+    <nav className="flex flex-row justify-between items-center w-full h-16 px-12 border-b">
+      <div className="text-2xl whitespace-nowrap">NMIMS Portal</div>
+      <div className="flex flex-row">
+        <div className="hidden md:block">
+          {navButtons.map((element, index) => (
+            <Button
+              key={index}
+              variant="link"
+              onClick={() => navigate(element.link)}
+            >
+              {element.text}
+            </Button>
+          ))}
+        </div>
+        <div className="flex flex-row gap-4">
+          <ModeToggle />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/fac/profile")}>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className="block md:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    ></path>
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Welcome</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {navButtons.map((element, index) => (
+                  <DropdownMenuItem
+                    key={index}
+                    onClick={() => navigate(element.link)}
+                  >
+                    {element.text}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
                   Logout
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="md:hidden">
-              <button
-                type="button"
-                className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
-                onClick={toggleUserDropdown}
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-              </button>
-            </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-      </nav>
-      <div className={`z-50 ${isUserDropdownOpen ? 'block' : 'hidden'} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-rose-700 dark:divide-rose-600`} id="user-dropdown">
-        <div className="px-4 py-3">
-          <span className="block text-sm">Welcome</span>
-          <span className="block text-sm">{user && user.email}</span>
-        </div>
-        <ul className="py-2" aria-labelledby="user-menu-button">
-         
-          <li>
-            <a href="#" className="block px-4 py-2 text-sm">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block px-4 py-2 text-sm">
-              Attendace
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block px-4 py-2 text-sm">
-              E Library
-            </a>
-          </li>
-          <li>
-            <a onClick={handleLogout} className="block px-4 py-2 text-sm">
-              Logout
-            </a>
-          </li>
-        </ul>
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import Nav from "../../Components/Faculty/Nav";
 import { useTheme } from "../../Components/theme-provider";
 import {
   Card,
@@ -12,16 +14,59 @@ import { Input } from "../../Components/ui/input";
 import { Label } from "../../Components/ui/label";
 
 import { Button } from "../../Components/ui/button";
-
 import Footer from "../../Components/Footer";
 
-const Profile = () => {
-  // State for profile rating
-  const [rating, setRating] = useState(3); // Initial rating value
+const FacProfile = () => {
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    dob: "",
+    sapId: "",
+    email: "",
+    collegeEmail: "",
+    year: "",
+    department: "",
+  });
+  const [idCardImage, setIdCardImage] = useState(null);
+  const { theme } = useTheme();
 
-  // Function to handle rating change
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
+  // Load user details from local storage on component mount
+  useEffect(() => {
+    const userDetailsFromStorage =
+      JSON.parse(localStorage.getItem("userDetails")) || {};
+    setUserDetails(userDetailsFromStorage);
+    const imageData = localStorage.getItem("idCardImage");
+    if (imageData) {
+      const blob = new Blob([imageData], { type: "image/*" });
+      setIdCardImage(blob);
+    }
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails({ ...userDetails, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setIdCardImage(file);
+  };
+
+  const handleDeleteImage = () => {
+    setIdCardImage(null);
+    localStorage.removeItem("idCardImage");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Save user details and image data to local storage
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    if (idCardImage) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        localStorage.setItem("idCardImage", e.target.result);
+      };
+      reader.readAsDataURL(idCardImage);
+    }
   };
 
   return (
@@ -102,19 +147,6 @@ const Profile = () => {
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="year" className="block text-sm font-medium">
-                    Year
-                  </Label>
-                  <Input
-                    type="text"
-                    id="year"
-                    name="year"
-                    value={userDetails.year}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
                   <Label
                     htmlFor="department"
                     className="block text-sm font-medium"
@@ -169,7 +201,7 @@ const Profile = () => {
           <div className="w-full">
             <Card>
               <CardHeader>
-                <CardTitle>Student Details</CardTitle>
+                <CardTitle>Faculty Details</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="grid w-full items-center gap-4">
@@ -189,9 +221,6 @@ const Profile = () => {
                     <strong>College Email:</strong> {userDetails.collegeEmail}
                   </li>
                   <li>
-                    <strong>Year:</strong> {userDetails.year}
-                  </li>
-                  <li>
                     <strong>Department:</strong> {userDetails.department}
                   </li>
                 </ul>
@@ -205,4 +234,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default FacProfile;
