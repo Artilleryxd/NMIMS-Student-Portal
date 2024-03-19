@@ -25,14 +25,25 @@ import {
   TableHead,
   TableRow,
 } from "@/Components/ui/table";
+import DatePicker from "../../Components/DatePicker";
+import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/ui/select";
 
 const Facassign = () => {
   const { user } = UserAuth();
   const db = getFirestore();
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [courseFilter, setCourseFilter] = useState("BTECH");
-  const [assignment, setAssignment] = useState("");
+  const [courseFilter, setCourseFilter] = useState("BTECH"); // default value is BTECH
+  const [assignment, setAssignment] = useState(""); // State to hold the assignment
+  const [deadline, setDeadline] = useState(new Date());
+  const [maxMarks, setMaxMarks] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -49,8 +60,8 @@ const Facassign = () => {
     fetchUsers();
   }, [db]);
 
-  const handleCheckboxChange = (event, userId) => {
-    if (event.target.checked) {
+  const handleCheckboxChange = (value, userId) => {
+    if (value) {
       setSelectedUsers([...selectedUsers, userId]);
     } else {
       setSelectedUsers(selectedUsers.filter((id) => id !== userId));
@@ -60,6 +71,7 @@ const Facassign = () => {
   const handleSubmit = async () => {
     if (!assignment.trim()) {
       console.error("Assignment name is required.");
+      toast.error("Assignment name is required.");
       return;
     }
 
@@ -69,20 +81,29 @@ const Facassign = () => {
         const uid = user.id;
         const assignmentRef = collection(db, `Users/${uid}/assignment`);
 
-        await addDoc(assignmentRef, { assignment: assignment, submit: false })
+        // Add a document with the assignment data
+        await addDoc(assignmentRef, {
+          assignment: assignment, // Use 'assignment' variable as a field
+          deadline: deadline,
+          maxMarks: Number(maxMarks),
+          submit: false,
+        })
           .then(() => {
-            console.log("Assignment added with path: Users/${uid}/assignment");
+            console.log(`Assignment added`);
+            toast.success("Assignment Added");
           })
           .catch((error) => {
             console.error("Error adding assignment: ", error);
+            toast.error("Error adding assignment: ", error);
           });
       }
     }
     setSelectedUsers([]);
   };
 
-  const handleCourseFilterChange = (event) => {
-    setCourseFilter(event.target.value);
+  const handleCourseFilterChange = (value) => {
+    setCourseFilter(value);
+    console.log(value);
   };
 
   const handleFilterSubmit = async () => {
@@ -103,76 +124,99 @@ const Facassign = () => {
   return (
     <>
       <Nav />
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <Card>
+      <div className="px-4 md:px-12 py-5 w-full">
+        <p className="font-bold text-3xl md:text-5xl mx-3 my-5">Assignments</p>
+        <Card className="grid grid-cols-3 grid-row-2">
+          <div className="col-span-3">
             <CardHeader>
               <CardTitle>Create Assignment</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Input
-                type="text"
-                placeholder="Enter Assignment Name"
-                value={assignment}
-                onChange={(e) => {
-                  setAssignment(e.target.value);
-                }}
-                className="mb-4"
-              />
-              <Button onClick={handleSubmit} className="w-full">
-                Create Assignment
-              </Button>
+            <CardContent className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="assignment_name">Assignment Name</Label>
+                <Input
+                  type="text"
+                  id="assignment_name"
+                  value={assignment}
+                  onChange={(e) => {
+                    setAssignment(e.target.value);
+                  }} // Assign Input change handler
+                />
+              </div>
+              <div>
+                <Label>Select Maximum Marks</Label>
+                <Input
+                  type="number"
+                  onChange={(marks) => {
+                    setMaxMarks(marks);
+                  }}
+                ></Input>
+              </div>
+              <div>
+                <Label>Select Deadline</Label>
+                <DatePicker
+                  onChange={(date) => setDeadline(date)}
+                  className="w-full"
+                ></DatePicker>
+              </div>
             </CardContent>
-          </Card>
-          <Card>
+          </div>
+          <div className="col-span-1">
             <CardHeader>
               <CardTitle>Filter</CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="text"
-                placeholder="Filter by Course"
-                value={courseFilter}
-                onChange={handleCourseFilterChange}
-                className="mb-4"
-              />
-              <Button onClick={handleFilterSubmit} className="w-full">
-                Apply Filter
-              </Button>
+              <div className="flex flex-col gap-4">
+                <Label htmlFor="courseFilter">Filter by Course:</Label>
+                <Select
+                  onValueChange={handleCourseFilterChange}
+                  defaultValue={courseFilter}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="MBATECH">MBATECH</SelectItem>
+                    <SelectItem value="BTECH">BTECH</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button onClick={handleFilterSubmit}>Filter</Button>
+              </div>
             </CardContent>
-          </Card>
-        </div>
-        <div className="rounded-md border overflow-x-auto">
-          <Table className="min-w-full">
-            <TableHead>
-              <TableRow>
-                <TableCell className="w-1/12">Checkbox</TableCell>
-                <TableCell>Email</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.map((userData) => (
-                <TableRow key={userData.id}>
-                  <TableCell className="align-middle">
-                    <input
-                      type="checkbox"
-                      checked={selectedUsers.includes(userData.id)}
-                      onChange={(event) =>
-                        handleCheckboxChange(event, userData.id)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell className="align-middle">
-                    {userData.email}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        <Button onClick={handleSubmit} className="mt-4 w-full">
-          Assign
-        </Button>
+          </div>
+          <CardContent className="col-span-2">
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Checkbox</TableHead>
+                    <TableHead>Email</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((userData, index) => (
+                    <TableRow key={userData.id}>
+                      <TableCell className="w-full flex justify-center">
+                        <Checkbox
+                          checked={selectedUsers.includes(userData.id)}
+                          onCheckedChange={(value) =>
+                            handleCheckboxChange(value, userData.id)
+                          }
+                        ></Checkbox>
+                      </TableCell>
+                      <TableCell>{userData.email}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+          <CardFooter className="col-span-3">
+            <Button onClick={handleSubmit} className="w-full">
+              Create
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
       <Footer />
     </>
