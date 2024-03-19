@@ -1,3 +1,5 @@
+import React , {useState , useEffect} from 'react';
+import Nav from '../../Components/Faculty/Nav';
 import { useTheme } from "../../Components/theme-provider";
 import {
   Card,
