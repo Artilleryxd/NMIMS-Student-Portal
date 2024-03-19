@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Nav from "../../Components/Nav";
+import React , {useState , useEffect} from 'react';
+import Nav from '../../Components/Faculty/Nav';
 import { useTheme } from "../../Components/theme-provider";
 import {
   Card,
@@ -18,56 +18,12 @@ import { Button } from "../../Components/ui/button";
 import Footer from "../../Components/Footer";
 
 const Profile = () => {
-  const [userDetails, setUserDetails] = useState({
-    name: "",
-    dob: "",
-    sapId: "",
-    email: "",
-    collegeEmail: "",
-    year: "",
-    department: "",
-  });
-  const [idCardImage, setIdCardImage] = useState(null);
-  const { theme } = useTheme();
+  // State for profile rating
+  const [rating, setRating] = useState(3); // Initial rating value
 
-  // Load user details from local storage on component mount
-  useEffect(() => {
-    const userDetailsFromStorage =
-      JSON.parse(localStorage.getItem("userDetails")) || {};
-    setUserDetails(userDetailsFromStorage);
-    const imageData = localStorage.getItem("idCardImage");
-    if (imageData) {
-      const blob = new Blob([imageData], { type: "image/*" });
-      setIdCardImage(blob);
-    }
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...userDetails, [name]: value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setIdCardImage(file);
-  };
-
-  const handleDeleteImage = () => {
-    setIdCardImage(null);
-    localStorage.removeItem("idCardImage");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Save user details and image data to local storage
-    localStorage.setItem("userDetails", JSON.stringify(userDetails));
-    if (idCardImage) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        localStorage.setItem("idCardImage", e.target.result);
-      };
-      reader.readAsDataURL(idCardImage);
-    }
+  // Function to handle rating change
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
   };
 
   return (
