@@ -100,11 +100,9 @@ const Facassign = () => {
           submit: false,
         })
           .then(() => {
-            console.log(`Assignment added`);
             toast.success("Assignment Added");
           })
           .catch((error) => {
-            console.error("Error adding assignment: ", error);
             toast.error("Error adding assignment: ", error);
           });
       }
@@ -128,6 +126,7 @@ const Facassign = () => {
       (userData) =>
         userData.type === "student" && userData.course === courseFilter
     );
+    console.log(filteredUsers);
     setUsers(filteredUsers);
   };
 
@@ -158,7 +157,7 @@ const Facassign = () => {
                 <Input
                   type="number"
                   onChange={(marks) => {
-                    setMaxMarks(marks);
+                    setMaxMarks(marks.target.value);
                   }}
                 ></Input>
               </div>
