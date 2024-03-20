@@ -77,7 +77,7 @@ const Nav = () => {
           <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Avatar>
+              <Avatar className="xs:hidden sm:hidden md:inline-block lg:inline-block">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
@@ -92,7 +92,7 @@ const Nav = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="block md:hidden">
-            <DropdownMenu>
+            <DropdownMenu >
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <svg

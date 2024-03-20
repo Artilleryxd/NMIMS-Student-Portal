@@ -67,7 +67,7 @@ const Elibrary = () => {
         </div>
 
         {selectedOption === "SRB" && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-4" style={{ color: "#1c212d" }}>{selectedOption} PDF</h2>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-4" style={{ backgroundColor: "#1c212d" }} onClick={() => window.open("https://elibrarydata.s3.ap-south-1.amazonaws.com/SRB+2023-24.pdf")}>
               SRB
@@ -76,7 +76,7 @@ const Elibrary = () => {
         )}
 
         {selectedOption === "TimeTable" && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md mb-6">
             <h2 className="text-2xl font-semibold mb-4" style={{ color: "#1c212d" }}>{selectedOption}</h2>
             <div className="course-container grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <CourseCard
@@ -94,7 +94,7 @@ const Elibrary = () => {
         )}
 
         {selectedOption === "QuestionPapers" && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-4" style={{ color: "#1c212d" }}>{selectedOption}</h2>
             <div className="course-container grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <CourseCard
@@ -112,7 +112,7 @@ const Elibrary = () => {
         )}
 
         {selectedOption === "Syllabus" && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-4" style={{ color: "#1c212d" }}>{selectedOption}</h2>
             <div className="course-container grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <CourseCard
@@ -130,7 +130,7 @@ const Elibrary = () => {
         )}
 
         {selectedCourse && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md">
             <div className="year-container grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div
                 className="year text-lg font-semibold text-center bg-gray-800 text-white p-4 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
@@ -149,7 +149,7 @@ const Elibrary = () => {
         )}
 
         {selectedYear && (
-          <div className="sub-container bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="sub-container mb-6 bg-gray-100 p-6 rounded-lg shadow-md">
             <div className="file-container">
               {/* Display PDF buttons based on the selected year */}
               

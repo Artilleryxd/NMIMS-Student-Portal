@@ -101,7 +101,7 @@ const Signin = () => {
         muted
         loop
         id="myVideo"
-        className="min-w-full min-h-full fixed z-0 object-cover opacity-50"
+        className={`min-w-full min-h-full fixed z-0 object-cover opacity-50 `}
       >
         <source src="videos/signup-bg-1.mp4" type="video/mp4" />
         Your browser does not support HTML5 video.
