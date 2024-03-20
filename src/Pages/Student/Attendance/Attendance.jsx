@@ -31,31 +31,34 @@ const Attendance = () => {
   const [progress, setProgress] = useState(0);
   const { user } = UserAuth();
   const db = getFirestore();
-  const { theme } = useTheme(); // Accessing the current theme using useTheme hook
+  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchAttendance = async () => {
-      const attendanceRef = collection(db, `Users/${user.uid}/attendance`);
-      const attendanceSnapshot = await getDocs(attendanceRef);
-      const attendanceData = attendanceSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setAttendanceData(attendanceData);
+      try {
+        const attendanceRef = collection(db, `Users/${user.uid}/attendance`);
+        const attendanceSnapshot = await getDocs(attendanceRef);
+        const attendanceData = attendanceSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAttendanceData(attendanceData);
 
-      const totalAttendance = attendanceData.length;
-      const totalLecturesAttended = attendanceData.filter(
-        (entry) => entry.present
-      ).length;
-      const calculatedProgress =
-        (totalLecturesAttended / totalAttendance) * 100;
-      setProgress(calculatedProgress);
+        const totalAttendance = attendanceData.length;
+        const totalLecturesAttended = attendanceData.filter(
+          (entry) => entry.present
+        ).length;
+        const calculatedProgress =
+          (totalLecturesAttended / totalAttendance) * 100;
+        setProgress(calculatedProgress);
+      } catch (error) {
+        console.error("Error fetching attendance:", error);
+      }
     };
 
     fetchAttendance();
   }, [db, user.uid]);
 
-  // Sample data for the BarChart (Replace with your actual attendance summary data)
   const attendanceSummaryData = [
     {
       subject: "COA",
@@ -71,29 +74,11 @@ const Attendance = () => {
     },
   ];
 
-  // Example data for upcoming lectures
-  const upcomingLectures = [
-    {
-      date: "2024-03-22",
-      time: "10:00 AM",
-      duration: "1 hour",
-      attended: false,
-    },
-    {
-      date: "2024-03-25",
-      time: "2:00 PM",
-      duration: "2 hours",
-      attended: true,
-    },
-    // Add more lecture objects as needed
-  ];
-
   return (
     <div className={`theme-${theme}`}>
       <Nav />
       <div className="container mx-auto py-8 px-4">
         <div className="flex flex-col items-center justify-center">
-          {/* Circular Progress Bar */}
           <div className="relative w-48 h-48">
             <CircularProgress
               variant="determinate"
@@ -111,13 +96,10 @@ const Attendance = () => {
               {progress.toFixed(2)}%
             </div>
           </div>
-          {/* Attendance Summary Graph */}
           <div className="w-full mt-8">
             <Card>
               <CardHeader>
-                <CardTitle style={{ color: "#000000" }}>
-                  Attendance Summary
-                </CardTitle>
+                <CardTitle>Attendance Summary</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -129,19 +111,19 @@ const Attendance = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       type="number"
-                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }} // Adjust text color based on theme
+                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }}
                     />
                     <YAxis
                       dataKey="subject"
                       type="category"
-                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }} // Adjust text color based on theme
+                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }}
                     />
                     <Tooltip
                       cursor={false}
                       contentStyle={{
                         backgroundColor:
-                          theme === "light" ? "#ffffff" : "#000000", // Adjust tooltip background color based on theme
-                        color: theme === "light" ? "#000000" : "#ffffff", // Adjust tooltip text color based on theme
+                          theme === "light" ? "#ffffff" : "#000000",
+                        color: theme === "light" ? "#000000" : "#ffffff",
                       }}
                     />
                     <Bar dataKey="count" fill="#65b88f" />
@@ -150,7 +132,6 @@ const Attendance = () => {
               </CardContent>
             </Card>
           </div>
-          {/* Top Cards */}
           <div className="flex flex-wrap justify-center mt-8 gap-4">
             <TopCard title="Total Attendance" value={attendanceData.length} />
             <TopCard
@@ -163,7 +144,6 @@ const Attendance = () => {
             />
             <TopCard title="Overall Progress" value={progress} />
           </div>
-          {/* Upcoming Lectures Container */}
           <UpcomingLectures />
         </div>
       </div>
