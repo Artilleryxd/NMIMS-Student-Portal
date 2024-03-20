@@ -225,7 +225,7 @@ const Account = () => {
       <div className="chatbot-container">
         {!chatbotInitialized && <ChatBot onInit={handleChatbotInit} />}
       </div>
-
+      
       <Footer />
     </>
   );
