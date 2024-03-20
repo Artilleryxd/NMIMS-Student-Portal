@@ -8,17 +8,12 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { UserAuth } from "../../Context/AuthContext";
-import { useRef } from "react";
 import Nav from "../../Components/Faculty/Nav";
-import { Checkbox } from "../../Components/ui/checkbox";
 import { Input } from "../../Components/ui/input";
-import { Label } from "../../Components/ui/label";
 import { Button } from "../../Components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../Components/ui/card";
@@ -28,7 +23,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
   TableRow,
 } from "@/Components/ui/table";
 import DatePicker from "../../Components/DatePicker";
@@ -44,7 +38,6 @@ import {
 const Facassign = () => {
   const { user } = UserAuth();
   const db = getFirestore();
-  const boxRef = useRef(null);
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [courseFilter, setCourseFilter] = useState("BTECH"); // default value is BTECH
@@ -76,20 +69,16 @@ const Facassign = () => {
   };
 
   const handleSubmit = async () => {
-    // Check if assignment name is provided
     if (!assignment.trim()) {
       console.error("Assignment name is required.");
       toast.error("Assignment name is required.");
       return;
     }
 
-    // Loop through selected users and add assignment
     for (const userId of selectedUsers) {
       const user = users.find((u) => u.id === userId);
       if (user) {
-        const uid = user.id; // Assuming uid is stored in 'id' field
-
-        // Create a document reference with the correct path
+        const uid = user.id;
         const assignmentRef = collection(db, `Users/${uid}/assignment`);
 
         // Add a document with the assignment data
@@ -228,7 +217,7 @@ const Facassign = () => {
           </CardFooter>
         </Card>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };
