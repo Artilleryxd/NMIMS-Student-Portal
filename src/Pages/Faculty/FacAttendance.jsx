@@ -66,7 +66,7 @@ const Facattendance = () => {
                       </DropdownMenu>
                       </div>
                       <div className='border p-2 mx-3 my-3 w-36 rounded text-center'>
-                              <button className='btn-primary'>Takkly</button>
+                              <button className='btn-primary'>Apply</button>
                       </div>
                     </div>
                   </CardContent>
