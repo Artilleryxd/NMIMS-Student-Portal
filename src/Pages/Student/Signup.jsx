@@ -100,14 +100,25 @@ const Signup = () => {
       <div className="h-screen flex items-center justify-center">
         <Card className="w-[350px] z-20 opacity-80">
           <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>Welcome to NMIMS University </CardDescription>
+            <CardTitle className={`${theme === "dark" ? "text-white" : ""}`}>
+              Sign Up
+            </CardTitle>
+            <CardDescription
+              className={`${theme === "dark" ? "text-white" : ""}`}
+            >
+              Welcome to NMIMS University{" "}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
               <div className="grid gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label
+                    htmlFor="email"
+                    className={`${theme === "dark" ? "text-white" : ""}`}
+                  >
+                    Email Address
+                  </Label>
                   <Input
                     id="email"
                     placeholder={placeholder.email}
@@ -119,11 +130,16 @@ const Signup = () => {
                       })
                     }
                     onChange={(e) => setEmail(e.target.value)}
-                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
+                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black ${theme === "dark" ? "text-white" : ""}`}
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="Password">Password</Label>
+                  <Label
+                    htmlFor="Password"
+                    className={`${theme === "dark" ? "text-white" : ""}`}
+                  >
+                    Password
+                  </Label>
                   <Input
                     type="password"
                     id="password"
@@ -131,11 +147,16 @@ const Signup = () => {
                     onBlur={() => setPlaceholder({ email: "", password: "" })}
                     onClick={() => setPlaceholder({ password: "••••••••" })}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
+                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black ${theme === "dark" ? "text-white" : ""}`}
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="course" className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}>Course</Label>
+                  <Label
+                    htmlFor="course"
+                    className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}
+                  >
+                    Course
+                  </Label>
                   <select
                     id="course"
                     onChange={(e) => setCourse(e.target.value)}
@@ -145,7 +166,11 @@ const Signup = () => {
                   >
                     <option value="">Select Course</option>
                     {courses.map((course, index) => (
-                      <option key={index} value={course}>
+                      <option
+                        key={index}
+                        value={course}
+                        className={`${theme === "dark" ? "bg-gray-800 text-white" : ""}`}
+                      >
                         {course}
                       </option>
                     ))}
