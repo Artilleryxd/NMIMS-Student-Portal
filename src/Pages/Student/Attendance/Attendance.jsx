@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { UserAuth } from "@/Context/AuthContext";
+import Nav from "../../../Components/Nav";
 import {
   Card,
   CardHeader,
@@ -9,8 +10,10 @@ import {
   CardContent,
   CardFooter,
 } from "@/Components/ui/card";
-import { Button } from "@/Components/ui/button";
-import Nav from "../../../Components/Nav";
+import { Button } from "../../../Components/ui/button";
+import CircularProgress from "@mui/material/CircularProgress";
+import TopCard from "../../../Components/TopCard";
+import UpcomingLectures from "../../../Components/UpcomingLectures";
 import {
   BarChart,
   Bar,
@@ -20,12 +23,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useTheme } from "../../../Components/theme-provider";
 
 const Attendance = () => {
   const navigate = useNavigate();
   const [attendanceData, setAttendanceData] = useState([]);
+  const [progress, setProgress] = useState(0);
   const { user } = UserAuth();
   const db = getFirestore();
+  const { theme } = useTheme(); // Accessing the current theme using useTheme hook
 
   useEffect(() => {
     const fetchAttendance = async () => {
@@ -36,95 +42,132 @@ const Attendance = () => {
         ...doc.data(),
       }));
       setAttendanceData(attendanceData);
+
+      const totalAttendance = attendanceData.length;
+      const totalLecturesAttended = attendanceData.filter(
+        (entry) => entry.present
+      ).length;
+      const calculatedProgress =
+        (totalLecturesAttended / totalAttendance) * 100;
+      setProgress(calculatedProgress);
     };
 
     fetchAttendance();
   }, [db, user.uid]);
 
   // Sample data for the BarChart (Replace with your actual attendance summary data)
-
   const attendanceSummaryData = [
     {
       subject: "COA",
-      count: attendanceData.filter((entry) => {
-        return (entry.subject == "COA");
-      }).length,
+      count: attendanceData.filter((entry) => entry.subject === "COA").length,
     },
     {
       subject: "MPMC",
-      count: attendanceData.filter((entry) => {
-        return (entry.subject == "MPMC");
-      }).length,
+      count: attendanceData.filter((entry) => entry.subject === "MPMC").length,
     },
     {
       subject: "DBMS",
-      count: attendanceData.filter((entry) => {
-        return (entry.subject == "DBMS");
-      }).length,
+      count: attendanceData.filter((entry) => entry.subject === "DBMS").length,
     },
   ];
 
+  // Example data for upcoming lectures
+  const upcomingLectures = [
+    {
+      date: "2024-03-22",
+      time: "10:00 AM",
+      duration: "1 hour",
+      attended: false,
+    },
+    {
+      date: "2024-03-25",
+      time: "2:00 PM",
+      duration: "2 hours",
+      attended: true,
+    },
+    // Add more lecture objects as needed
+  ];
+
   return (
-    <>
+    <div className={`theme-${theme}`}>
       <Nav />
-      <Card>
-        <CardHeader>
-          <CardTitle>Attendance Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={attendanceSummaryData} // Use your actual attendance summary data here
-              layout="vertical"
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" tick={{ fill: "hsl(var(--foreground))" }} />
-              <YAxis
-                dataKey="subject"
-                type="category"
-                tick={{ fill: "hsl(var(--foreground))" }}
-              />
-              <Tooltip
-                cursor={false}
-                contentStyle={{
-                  backgroundColor: "hsl(var(--background)) ",
-                }}
-                itemStyle={{ color: "hsl(var(--foreground))" }}
-              />
-              <Bar dataKey="count" fill="#65b88f" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Attendance</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          {attendanceData.map((entry, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between border-b border-gray-200 pb-2"
-            >
-              <div>
-                <p className="text-lg font-semibold">
-                  Date: {entry.attendance}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Present: {entry.present ? "Yes" : "No"}
-                </p>
-              </div>
-              <div
-                className={`flex-shrink-0 h-3 w-3 rounded-full ${entry.present ? "bg-green-500" : "bg-red-500"}`}
-              ></div>
+      <div className="container mx-auto py-8 px-4">
+        <div className="flex flex-col items-center justify-center">
+          {/* Circular Progress Bar */}
+          <div className="relative w-48 h-48">
+            <CircularProgress
+              variant="determinate"
+              value={progress}
+              size={200}
+              sx={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                zIndex: 1,
+                color: progress >= 50 ? "#10B981" : "#EF4444",
+              }}
+            />
+            <div className="absolute flex items-center justify-center w-48 h-48 text-4xl font-bold">
+              {progress.toFixed(2)}%
             </div>
-          ))}
-        </CardContent>
-        <CardFooter>
-        </CardFooter>
-      </Card>
-    </>
+          </div>
+          {/* Attendance Summary Graph */}
+          <div className="w-full mt-8">
+            <Card>
+              <CardHeader>
+                <CardTitle style={{ color: "#000000" }}>
+                  Attendance Summary
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart
+                    data={attendanceSummaryData}
+                    layout="vertical"
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      type="number"
+                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }} // Adjust text color based on theme
+                    />
+                    <YAxis
+                      dataKey="subject"
+                      type="category"
+                      tick={{ fill: theme === "light" ? "#000000" : "#ffffff" }} // Adjust text color based on theme
+                    />
+                    <Tooltip
+                      cursor={false}
+                      contentStyle={{
+                        backgroundColor:
+                          theme === "light" ? "#ffffff" : "#000000", // Adjust tooltip background color based on theme
+                        color: theme === "light" ? "#000000" : "#ffffff", // Adjust tooltip text color based on theme
+                      }}
+                    />
+                    <Bar dataKey="count" fill="#65b88f" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+          {/* Top Cards */}
+          <div className="flex flex-wrap justify-center mt-8 gap-4">
+            <TopCard title="Total Attendance" value={attendanceData.length} />
+            <TopCard
+              title="Total Lectures Attended"
+              value={attendanceData.filter((entry) => entry.present).length}
+            />
+            <TopCard
+              title="Total Attendance Skipped"
+              value={attendanceData.filter((entry) => !entry.present).length}
+            />
+            <TopCard title="Overall Progress" value={progress} />
+          </div>
+          {/* Upcoming Lectures Container */}
+          <UpcomingLectures />
+        </div>
+      </div>
+    </div>
   );
 };
 
