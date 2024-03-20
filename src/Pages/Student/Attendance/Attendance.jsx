@@ -24,6 +24,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useTheme } from "../../../Components/theme-provider";
+import Footer from "../../../Components/Footer";
 
 const Attendance = () => {
   const navigate = useNavigate();
@@ -133,7 +134,7 @@ const Attendance = () => {
             </Card>
           </div>
           <div className="flex flex-wrap justify-center mt-8 gap-4">
-            <TopCard title="Total Attendance" value={attendanceData.length} />
+            <TopCard title="Total Attendance" value={attendanceData.length}/>
             <TopCard
               title="Total Lectures Attended"
               value={attendanceData.filter((entry) => entry.present).length}
@@ -147,7 +148,9 @@ const Attendance = () => {
           <UpcomingLectures />
         </div>
       </div>
+      <Footer/>
     </div>
+
   );
 };
 

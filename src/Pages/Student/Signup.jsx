@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { doc, setDoc, getFirestore, collection } from "firebase/firestore";
 import { Input } from "../../Components/ui/input";
 import { Label } from "../../Components/ui/label";
+import { useTheme } from "../../Components/theme-provider";
 import {
   Card,
   CardContent,
@@ -17,6 +18,7 @@ import ModeToggle from "../../Components/ui/mode-toggle";
 import { School } from "lucide-react";
 
 const Signup = () => {
+  const { theme } = useTheme();
   const { createUser } = UserAuth();
   const [placeholder, setPlaceholder] = useState({
     email: "",
@@ -133,12 +135,12 @@ const Signup = () => {
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="course">Course</Label>
+                  <Label htmlFor="course" className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}>Course</Label>
                   <select
                     id="course"
                     onChange={(e) => setCourse(e.target.value)}
                     value={course}
-                    className="rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black"
+                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 ${theme === "dark" ? "text-white" : "text-black"}`}
                     style={{ height: "2.5rem" }}
                   >
                     <option value="">Select Course</option>
