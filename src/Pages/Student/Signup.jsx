@@ -30,6 +30,7 @@ const Signup = () => {
   const [course, setCourse] = useState("");
   const navigate = useNavigate();
   const db = getFirestore();
+  
 
   const courses = ["BTECH", "MBATECH", "BTI", "MCA"];
 
@@ -47,6 +48,19 @@ const Signup = () => {
     const assignmentCollection = collection(val, "assignment");
     await setDoc(doc(assignmentCollection, "assign1"), {
       present: true,
+    });
+    const idCollection = collection(val ,"ID_card");
+    await setDoc(doc(idCollection,"Card") , {
+      Name : "",
+      DOB : "",
+      BloodGroup : "",
+      Department : "",
+      Course : "",
+      Email : "",
+      SAP_ID : "",
+      Year : "",
+      Address :"",
+      ClgEmail : "",
     });
   };
 
@@ -153,7 +167,7 @@ const Signup = () => {
                 <div className="flex flex-col space-y-1.5">
                   <Label
                     htmlFor="course"
-                    className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}
+                    className={`${theme === "dark" ? "text-white" : ""}`}
                   >
                     Course
                   </Label>
@@ -161,7 +175,7 @@ const Signup = () => {
                     id="course"
                     onChange={(e) => setCourse(e.target.value)}
                     value={course}
-                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 ${theme === "dark" ? "text-white" : "text-black"}`}
+                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black ${theme === "dark" ? "text-white" : ""}`}
                     style={{ height: "2.5rem" }}
                   >
                     <option value="">Select Course</option>
