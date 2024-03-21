@@ -60,7 +60,9 @@ const Nav = () => {
 
   return (
     <nav className="flex flex-row justify-between items-center w-full h-16 px-12 border-b">
-      <div className="text-2xl whitespace-nowrap"><a href="/account">NMIMS Portal</a></div>
+      <div className="text-2xl whitespace-nowrap">
+        <a href="/account">NMIMS Portal</a>
+      </div>
       <div className="flex flex-row">
         <div className="hidden md:block">
           {navButtons.map((element, index) => (

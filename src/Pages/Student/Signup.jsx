@@ -16,6 +16,7 @@ import {
 import { Button } from "../../Components/ui/button";
 import ModeToggle from "../../Components/ui/mode-toggle";
 import { School } from "lucide-react";
+import { useTheme } from "../../Components/theme-provider"; // Import useTheme hook
 
 const Signup = () => {
   const { theme } = useTheme();
@@ -30,6 +31,7 @@ const Signup = () => {
   const [course, setCourse] = useState("");
   const navigate = useNavigate();
   const db = getFirestore();
+  const { theme } = useTheme(); // Access the current theme
 
   const courses = ["BTECH", "MBATECH", "BTI", "MCA"];
 
@@ -153,7 +155,11 @@ const Signup = () => {
                 <div className="flex flex-col space-y-1.5">
                   <Label
                     htmlFor="course"
+<<<<<<< HEAD
                     className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}
+=======
+                    className={`${theme === "dark" ? "text-white" : ""}`}
+>>>>>>> e46e31f522808a60df3df61421b7a794fdee0496
                   >
                     Course
                   </Label>
@@ -161,7 +167,11 @@ const Signup = () => {
                     id="course"
                     onChange={(e) => setCourse(e.target.value)}
                     value={course}
+<<<<<<< HEAD
                     className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 ${theme === "dark" ? "text-white" : "text-black"}`}
+=======
+                    className={`rounded-md border border-gray-300 shadow-sm focus:outline-none focus:border-indigo-300 focus:ring bg-transparent focus:ring-indigo-200 focus:ring-opacity-50 bg-opacity-50 text-black ${theme === "dark" ? "text-white" : ""}`}
+>>>>>>> e46e31f522808a60df3df61421b7a794fdee0496
                     style={{ height: "2.5rem" }}
                   >
                     <option value="">Select Course</option>
