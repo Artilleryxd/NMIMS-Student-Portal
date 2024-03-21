@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../../Components/Faculty/Nav";
+import Nav from "../../Components/Nav";
 import Footer from "../../Components/Footer";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { UserAuth } from "../../Context/AuthContext";

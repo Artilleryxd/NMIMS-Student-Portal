@@ -49,6 +49,19 @@ const Signup = () => {
     await setDoc(doc(assignmentCollection, "assign1"), {
       present: true,
     });
+    const idCollection = collection(val ,"ID_card");
+    await setDoc(doc(idCollection,"Card") , {
+      Name : "",
+      DOB : "",
+      BloodGroup : "",
+      Department : "",
+      Course : "",
+      Email : "",
+      SAP_ID : "",
+      Year : "",
+      Address :"",
+      ClgEmail : "",
+    });
   };
 
   const handleSubmit = async (e) => {
