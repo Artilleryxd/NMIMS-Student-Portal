@@ -34,16 +34,35 @@ const Profile = () => {
   }, [db, user.uid]);
 
   return (
+    
     <div>
       <Nav />
-      <div className="container mx-auto my-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Profile</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <div>
+      <div className="flex justify-start">
+        <div className="p-2 m-1 grid gap-4 w-fit h-fit">
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Profile</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVc22FgIapuN5SmPjiN6uI3Vfj1uNO1ShdSg&usqp=CAU"
+                className="rounded-full"
+              />
+              <p className="mt-2 text-xl text-white text-center">Test User</p>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="p-2 m-1 grid gap-4 w-full">
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Details</CardTitle>
+            </CardHeader>
+            <CardContent>
+
+            <hr className="my-2 " />
             {userDetails ? (
-              <ul>
+              <ul className="">
                 <li>
                   <strong>Name:</strong> {userDetails.Name}
                 </li>
@@ -65,13 +84,18 @@ const Profile = () => {
                 <li>
                   <strong>Department:</strong> {userDetails.Department}
                 </li>
+                <li>
+                  <strong>Course:</strong> {userDetails.Course}
+                </li>
               </ul>
             ) : (
               <p>Loading user details...</p>
             )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
+    </div>
       <Footer />
     </div>
   );
